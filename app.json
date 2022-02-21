@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Virtual-Decor-Application",
+    "slug": "Virtual-Decor-Application",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
