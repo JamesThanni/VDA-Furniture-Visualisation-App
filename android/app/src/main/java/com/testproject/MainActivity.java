@@ -1,4 +1,4 @@
-package com.testproject;
+package com.Virtual-Decor-Application;
 
 import android.os.Build;
 import android.os.Bundle;
