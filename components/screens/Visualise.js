@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
 import { Camera } from 'expo-camera';
 
-export default function Placement({navigation}) {
+export default function Visualise({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
   
@@ -22,22 +22,8 @@ export default function Placement({navigation}) {
     }
 
     return (
-        <View style={{width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Camera style={styles.camera} type={type}>
-                <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                    setType(
-                        type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back
-                    );
-                    }}>
-                    <Text style={styles.text}> Flip </Text>
-                </TouchableOpacity>
-                </View>
-            </Camera>
+        <View style={{backgroundColor: '#121212', width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: "white", fontWeight: "bold"}}></Text>
            
         </View>
     );
@@ -69,3 +55,22 @@ const styles = StyleSheet.create({
       color: 'white',
     },
   });
+
+
+  /*
+<Camera style={styles.camera} type={type}>
+                <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                    setType(
+                        type === Camera.Constants.Type.back
+                        ? Camera.Constants.Type.front
+                        : Camera.Constants.Type.back
+                    );
+                    }}>
+                    <Text style={styles.text}> Flip </Text>
+                </TouchableOpacity>
+                </View>
+            </Camera>
+  */

@@ -24,7 +24,7 @@
     <scene sceneID="EXPO-SCENE-1">
       <objects>
         <viewController
-          storyboardIdentifier="SplashScreenViewController"
+          storyboardIdentifier="SplashViewController"
           id="EXPO-VIEWCONTROLLER-1"
           sceneMemberID="viewController"
         >
@@ -45,10 +45,10 @@
                 horizontalHuggingPriority="251"
                 verticalHuggingPriority="251"
                 insetsLayoutMarginsFromSafeArea="NO"
-                image="SplashScreenBackground"
+                image="SplashBackground"
                 translatesAutoresizingMaskIntoConstraints="NO"
-                id="EXPO-SplashScreenBackground"
-                userLabel="SplashScreenBackground"
+                id="EXPO-SplashBackground"
+                userLabel="SplashBackground"
               >
                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
               </imageView>
@@ -59,22 +59,22 @@
                 horizontalHuggingPriority="251"
                 verticalHuggingPriority="251"
                 translatesAutoresizingMaskIntoConstraints="NO"
-                image="SplashScreen"
-                id="EXPO-SplashScreen"
-                userLabel="SplashScreen"
+                image="Splash"
+                id="EXPO-Splash"
+                userLabel="Splash"
               >
                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
               </imageView>
             </subviews>
             <constraints>
-              <constraint firstItem="EXPO-SplashScreenBackground" firstAttribute="top" secondItem="EXPO-ContainerView" secondAttribute="top" id="1gX-mQ-vu6"/>
-              <constraint firstItem="EXPO-SplashScreenBackground" firstAttribute="leading" secondItem="EXPO-ContainerView" secondAttribute="leading" id="6tX-OG-Sck"/>
-              <constraint firstItem="EXPO-SplashScreenBackground" firstAttribute="trailing" secondItem="EXPO-ContainerView" secondAttribute="trailing" id="ABX-8g-7v4"/>
-              <constraint firstItem="EXPO-SplashScreenBackground" firstAttribute="bottom" secondItem="EXPO-ContainerView" secondAttribute="bottom" id="jkI-2V-eW5"/>
-              <constraint firstItem="EXPO-SplashScreen" firstAttribute="top" secondItem="EXPO-ContainerView" secondAttribute="top" id="2VS-Uz-0LU"/>
-              <constraint firstItem="EXPO-SplashScreen" firstAttribute="leading" secondItem="EXPO-ContainerView" secondAttribute="leading" id="LhH-Ei-DKo"/>
-              <constraint firstItem="EXPO-SplashScreen" firstAttribute="trailing" secondItem="EXPO-ContainerView" secondAttribute="trailing" id="I6l-TP-6fn"/>
-              <constraint firstItem="EXPO-SplashScreen" firstAttribute="bottom" secondItem="EXPO-ContainerView" secondAttribute="bottom" id="nbp-HC-eaG"/>
+              <constraint firstItem="EXPO-SplashBackground" firstAttribute="top" secondItem="EXPO-ContainerView" secondAttribute="top" id="1gX-mQ-vu6"/>
+              <constraint firstItem="EXPO-SplashBackground" firstAttribute="leading" secondItem="EXPO-ContainerView" secondAttribute="leading" id="6tX-OG-Sck"/>
+              <constraint firstItem="EXPO-SplashBackground" firstAttribute="trailing" secondItem="EXPO-ContainerView" secondAttribute="trailing" id="ABX-8g-7v4"/>
+              <constraint firstItem="EXPO-SplashBackground" firstAttribute="bottom" secondItem="EXPO-ContainerView" secondAttribute="bottom" id="jkI-2V-eW5"/>
+              <constraint firstItem="EXPO-Splash" firstAttribute="top" secondItem="EXPO-ContainerView" secondAttribute="top" id="2VS-Uz-0LU"/>
+              <constraint firstItem="EXPO-Splash" firstAttribute="leading" secondItem="EXPO-ContainerView" secondAttribute="leading" id="LhH-Ei-DKo"/>
+              <constraint firstItem="EXPO-Splash" firstAttribute="trailing" secondItem="EXPO-ContainerView" secondAttribute="trailing" id="I6l-TP-6fn"/>
+              <constraint firstItem="EXPO-Splash" firstAttribute="bottom" secondItem="EXPO-ContainerView" secondAttribute="bottom" id="nbp-HC-eaG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Rmq-lb-GrQ"/>
           </view>
@@ -85,7 +85,7 @@
     </scene>
   </scenes>
   <resources>
-    <image name="SplashScreen" width="414" height="736"/>
-    <image name="SplashScreenBackground" width="1" height="1"/>
+    <image name="Splash" width="414" height="736"/>
+    <image name="SplashBackground" width="1" height="1"/>
   </resources>
 </document>

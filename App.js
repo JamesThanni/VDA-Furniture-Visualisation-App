@@ -3,38 +3,22 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet, Text, Image, View, Settings } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MainContainer from './components/MainContainer';
-import SplashScreen from './components/screens/SplashScreen';
+import Main from './components/Main';
+import Guide from './components/screens/Guide';
+import Splash from './components/screens/Splash';
 
-const styles = StyleSheet.create({
-  logo: {
-    width: 66,
-    height: 58,
-  },
-});
-const Splash = ({onPress}) => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    <Image
-        style={styles.logo}
-        source={require('./assets/sofa.png')}
-        onPress={()=> {onPress("Main")}}
-      />
-    <Text style={{fontSize: 32, fontWeight: 'bold'}} onPress={()=> {onPress("Main")}}>Virtual Decor</Text>
-  </View>
-);
 
-const Main = <MainContainer/>;
 
 export default function App({navigation}) {
   
   const [currentView, setCurrentView] = React.useState("Splash");
   
   return(   
-      <View style={{flex: 1}}>
+      <View style={{backgroundColor: "#121212", flex: 1}}>
         {
           currentView === "Splash" ?
           <Splash onPress={page => setCurrentView(page)}/> :
-          <MainContainer/>
+          <Guide/>
         }
       </View>
   
