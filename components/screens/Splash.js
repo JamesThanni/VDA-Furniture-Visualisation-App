@@ -8,10 +8,10 @@ export default function Splash({navigation, route, onPress}) {
     const homePage = "Select Furniture";
     const settingsPage = "Settings";
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=> {onPress('Guide')}}>
             <Image
                 style={styles.logo}
-                source={require('../../assets/sofa.png')}
+                source={require('../../assets/sofa-icon.png')}
                 onPress={()=> {onPress('Guide')}}
             />
             <Text 
@@ -24,6 +24,7 @@ export default function Splash({navigation, route, onPress}) {
         
     );
 }
+// Basic page with logo and app title. Press page, icon or logo to take you to guide page.
 
 const styles = StyleSheet.create({
     logo: {

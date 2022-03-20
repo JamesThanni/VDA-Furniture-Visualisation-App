@@ -36,7 +36,10 @@ export default function Main() {
                 },                
                 "tabBarActiveTintColor": '#72B93A',
                 "tabBarInactiveTintColor": '#ffffff',
-                "headerTitleStyle" : {"fontSize": 18, "color": "#ffffff"},
+                "headerTitleStyle" : {
+                    "fontSize": 24, 
+                    "color": "#ffffff",
+                },
                 "tabBarLabelStyle": {                    
                     "paddingBottom": 20, 
                     "fontSize": 12,
@@ -80,11 +83,13 @@ export default function Main() {
                 
 
             </Tab.Navigator>
+            
         </NavigationContainer>
         /*
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Hello!</Text>
-        </View>
+        Navigation Container - The main container for the views users will navigate through based on the selected window in the bottom navbar
+        Tab Navigator - the controller for selected tab
+        Tab Navigator, ScreenOptions - styling customisation for the navbar. We use an if statement to use different icons for different pages.
+        Tab Screen - the view displayed when a tab is selected in the navbar.
         */
     );
 }

@@ -10,10 +10,10 @@ const GuidePage = ({onPress}) => (
             <Image style={styles.img} source={require("../../assets/guide-image.jpg")}/>
             <Header headerText={'Visualise your Room'}/>
             <Text style={styles.guideText}>
-                    Pick from a wide range of decor items that fit your space. Input 
-                    the dimensions of your room in the settings page and use 
-                    the visualise button “    “ to generate a visualisation of 
-                    the chosen furniture in your room!
+                    Pick from a wide range of decor items that fit your space. 
+                    Input the dimensions of your room in the settings page and 
+                    use the visualise button to generate a visualisation of the 
+                    chosen furniture in your room!
             </Text>
             <TouchableOpacity style={styles.button} onPress={onPress}>
                 <Text style={styles.buttonText}>Get Started</Text>
@@ -23,6 +23,7 @@ const GuidePage = ({onPress}) => (
         
     );
     
+// Basic description of the app functionality for new users with nice splash image
 
 export default function Guide({navigation, route}) {
     const visualPage = 'Place Furniture';
@@ -34,14 +35,15 @@ export default function Guide({navigation, route}) {
     return(   
         <View style={{backgroundColor: "#121212", flex: 1}}>
             {
-            currentView === "GuidePage" ?
-            <GuidePage onPress={page => setCurrentView(page)}/> :
-            <Main/>
+                currentView === "GuidePage" ?
+                <GuidePage onPress={page => setCurrentView(page)}/> :
+                <Main/>
             }
         </View>
     
   );
 }        
+// moves page to home page when the get started button is selected
 
 const styles = StyleSheet.create({
         container: {
@@ -56,12 +58,12 @@ const styles = StyleSheet.create({
             textAlign: 'center',
             marginBottom: 30,
             color: '#ffffff',
-            width: 350,
+            width: "95%",
             fontWeight: "200"
         },
         img: {
-            width: 500,
-            height: 500,
+            width: "100%",
+            height: "65%",
         },
         button: {
             padding: 10,
