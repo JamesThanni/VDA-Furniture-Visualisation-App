@@ -37,7 +37,12 @@ export default function Home({navigation}) {
 
             {
                 products.map(product => 
-                    <ProductListItem key={product.id} name={product.dcName} material={product.dcMaterial} price={product.price} img={product.img}/>
+                    <ProductListItem 
+                    key={product.id} 
+                    name={product.dcName} 
+                    material={product.dcMaterial} 
+                    price={product.price} 
+                    img={product.img}/>
                 )
             }
 

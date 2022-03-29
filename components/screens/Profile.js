@@ -1,26 +1,44 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
-
+import Header from '../info/Header';
 export default function Profile({navigation}) {
     return (
         <View style={styles.container}>
-            <Text>Profile Screen</Text>
+            <View style={styles.options}>
+                <Header headerText="Your profile settings"/>
+                <Text style={styles.hintText}>Email</Text>
+                <Text style={styles.hintText}>Current Password</Text>
+                <Text style={styles.hintText}>New Password</Text>
+                <Text style={styles.hintText}>Notifications</Text>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container : {
-        backgroundColor: '#121212',
-        display: "flex",
-        flex: 1,
+        paddingTop: "10%",
+        flex: 1, 
+        display: "flex",    
         alignItems: 'center', 
-        justifyContent: 'center'}
-    ,
+        justifyContent: 'center',
+        backgroundColor: '#121212'
+    },
+    options: {
+        flex: 5, 
+         display: "flex", 
+         alignItems: 'flex-start', 
+         justifyContent: 'flex-start', 
+         width: "90%", 
+         marginBottom: "5%",
+         backgroundColor: '#1e1e1e',
+         borderRadius: 10
+    },
     hintText: {
         color: "white",
-        fontSize: 16,
-        paddingBottom: 5
+        fontSize: 12,
+        paddingBottom: 5,
+        marginLeft: 20
     }
 });
 /*

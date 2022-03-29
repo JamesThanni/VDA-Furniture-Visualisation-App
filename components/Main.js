@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Visualise from './screens/Visualise';
 import Home from './screens/Home';
 import Cart from './screens/Cart';
-import Profile from './screens/Cart';
+import Profile from './screens/Profile';
 import AppSettings from './screens/AppSettings';
 
 
@@ -37,7 +37,7 @@ export default function Main() {
                 "tabBarActiveTintColor": '#72B93A',
                 "tabBarInactiveTintColor": '#ffffff',
                 "headerTitleStyle" : {
-                    "fontSize": 24, 
+                    "fontSize": 32, 
                     "color": "#ffffff",
                 },
                 "tabBarLabelStyle": {                    

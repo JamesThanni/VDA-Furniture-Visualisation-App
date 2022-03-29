@@ -5,6 +5,7 @@ export default {
   sofa: require(`${BASE_URL}sofa.png`),
   foldable: require(`${BASE_URL}foldable.png`),
   stool: require(`${BASE_URL}stool.png`),
+  painting: require(`${BASE_URL}painting.png`),
 }
 
 /* 

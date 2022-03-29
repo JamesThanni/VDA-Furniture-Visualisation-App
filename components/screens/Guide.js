@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
             flex: 1
         },
         guideText: {
-            fontSize: 14, 
+            fontSize: 12, 
             textAlign: 'center',
             marginBottom: 30,
             color: '#ffffff',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         },
         buttonText: {
             color: '#fff',
-            fontSize: 20
+            fontSize: 16
         }
     });
 

@@ -16,11 +16,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     text: {
-        fontSize: 24,
-        fontWeight: "600",
+        fontSize: 16,
+        fontWeight: "700",
         color: "#ffffff",
         textAlign: 'center',
     }
 })
 
 export default Header;
+ 

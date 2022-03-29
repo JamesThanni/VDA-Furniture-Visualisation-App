@@ -1,21 +1,19 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
-import ProductImages from "./ProductImages"
+import ProductImages from "./ProductImages";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
 
 
 const ProductListItem = (props) => {
     function addToCart(product){
-        cart.push(product);
+        //Cart.cart.push(product);
     }
     function removeFromCart(product){
-        cart.pop(product);
+        //Cart.cart.pop(product);
     }
     
     var imageID = ProductImages[props.img]
-    var cart = [["Painting", "Canvas", "17.99"]];
+    
     const [selected, setSelected] = React.useState(false);
     // a useState for the item which will change the selectOption button depending on if a user selects a product or not
 
@@ -23,8 +21,7 @@ const ProductListItem = (props) => {
         <View style={styles.objectSection}>
             <Image
                 style={styles.object}
-                source={imageID}                
-                onPress={()=> {onPress("Main")}}
+                source={imageID}            
             />
             <View style={styles.description}>
                 <Text style={styles.objectName}>{props.name}</Text>
@@ -91,10 +88,8 @@ const styles = StyleSheet.create({
         margin: 5
     },
     object: {
-        flex: 2,
-        width: "100%",
-        height: "75%",
-        borderRadius: 10,
+        flex: 1,
+        resizeMode: 'contain',
         alignSelf: 'center',
         margin: 5
     },
