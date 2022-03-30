@@ -18,7 +18,7 @@ const homePage = "Browse";
 const cartPage = "Cart"
 const visualPage = 'Visualise';
 const profilePage = "Profile"
-const settingsPage = "App Settings";
+const settingsPage = "Settings";
 
 
 const Tab = createBottomTabNavigator();
@@ -37,18 +37,18 @@ export default function Main() {
                 "tabBarActiveTintColor": '#72B93A',
                 "tabBarInactiveTintColor": '#ffffff',
                 "headerTitleStyle" : {
-                    "fontSize": 32, 
+                    "fontSize": 18, 
                     "color": "#ffffff",
                 },
                 "tabBarLabelStyle": {                    
-                    "paddingBottom": 20, 
+                    "paddingBottom": "5%", 
                     "fontSize": 12,
                 },
                 "tabBarStyle" :{
                     "padding": 10,
-                    "height": '15%',
+                    "height": '12%',
                     "backgroundColor": '#121212',
-                    "borderTopWidth": 0
+                    "borderTopWidth": 0,
                                     
                 },
                 tabBarIcon: ({focused, color, size}) => {

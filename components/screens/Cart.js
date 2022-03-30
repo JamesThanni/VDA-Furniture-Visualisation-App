@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
          display: "flex", 
          alignItems: 'flex-start', 
          justifyContent: 'flex-start', 
-         width: "90%", 
+         width: "95%", 
          marginBottom: "5%",
          backgroundColor: '#1e1e1e',
          borderRadius: 10
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
          display: "flex", 
          alignItems: 'flex-start', 
          justifyContent: 'flex-start', 
-         width: "90%", 
+         width: "95%", 
          marginBottom: "5%",
          backgroundColor: '#1e1e1e',
          borderRadius: 10

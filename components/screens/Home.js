@@ -14,9 +14,9 @@ export default function Home({navigation}) {
         ]); // object array where each product is an object with various properties for display info
 
     const categories = [
-        {catNo: 2, cat: "Desk"},
-        {catNo: 3, cat: "Art"}, 
-        {catNo: 4, cat: "Lighting"}, 
+        {catNo: 2, cat: "Chairs"},
+        {catNo: 3, cat: "Desks"}, 
+        {catNo: 4, cat: "Wall Art"}, 
         {catNo: 5, cat: "Shelving"}
     ];
 
@@ -25,7 +25,7 @@ export default function Home({navigation}) {
             
             <View style={styles.filters}>   
             
-            <Filter category={"Chair"} status={true}/>
+            <Filter category={"All"} status={true}/>
 
             {
                 categories.map(category => 

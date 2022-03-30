@@ -45,8 +45,8 @@ const ProductListItem = (props) => {
             >                
                     {    
                         selected ?
-                        <Ionicons name={"close"} size={20} color={"red"}/> : // if an item is selected, the deselect icon will render
-                        <Ionicons name={"basket"} size={20} color={"white"}/>  // if an item is not selected, the select icon  will render
+                        <Ionicons name={"close"} size={25} color={"red"}/> : // if an item is selected, the deselect icon will render
+                        <Ionicons name={"basket"} size={25} color={"white"}/>  // if an item is not selected, the select icon  will render
                     }
             </TouchableOpacity>
         </View>
@@ -69,29 +69,30 @@ for respective purposes.
 */
 
 const styles = StyleSheet.create({
-    selectOption: {
-        flex: 1,
-        marginTop: 15, 
-        marginRight: -30,
-        alignSelf: "flex-start", 
-        color: "white"
-    },
     objectSection: {
         display: "flex",
         flexDirection: "row",
         flex: 1, 
         justifyContent: "flex-start",
         width: "95%",
-        padding: 7.5,
+        padding: 5,
+        margin: 5,
         backgroundColor: "#1e1e1e",
-        borderRadius: 10,
-        margin: 5
+        borderRadius: 10        
     },
     object: {
         flex: 1,
+        margin: 10,
         resizeMode: 'contain',
-        alignSelf: 'center',
-        margin: 5
+        alignSelf: 'center'        
+    },
+    description: {
+        display: "flex",
+        flex: 4,    
+        flexDirection:"column",
+        alignSelf: "center",
+        margin: 2,
+        marginTop: 5
     },
     objectName: { 
         paddingRight: 10,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
         paddingTop: 2,
         paddingLeft: 10,
         paddingRight: 10,
-        fontSize: 8,
+        fontSize: 12,
         color: '#72B93A'
     },
     objectPrice :{
@@ -115,13 +116,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#ffffff'
     },
-    description: {
-        display: "flex",
-        flex: 3,    
-        flexDirection:"column",
-        alignSelf: "flex-start",
-        margin: 5,
-        marginTop: 10
+    selectOption: {
+        flex: 1,
+        marginRight: -10,
+        alignSelf: "center", 
+        color: "white"
     }
 });
 
