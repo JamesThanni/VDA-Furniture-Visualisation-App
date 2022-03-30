@@ -7,14 +7,15 @@ import { Scene, Mesh, MeshBasicMaterial, PerspectiveCamera } from 'three';
 import ExpoTHREE, {Renderer, DirectionalLight} from 'expo-three';
 import { ExpoWebGLRenderingContext, GLView} from 'expo-gl';
 import { BoxBufferGeometry, BoxGeometry, MeshPhongMaterial, BackSide, FBX } from 'three';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import Header from '../info/Header';
+import { Asset } from 'expo-asset';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 export default function Visualise({navigation}) {
      
   const onContextCreate = async ( gl ) => {
-   
+    
     const scene = new Scene();
     const camera = new PerspectiveCamera(
         75, 
@@ -33,8 +34,83 @@ export default function Visualise({navigation}) {
     const material = new MeshPhongMaterial({color: 0xffffff,});
     const cube = new Mesh(geometry, material);
     cube.rotation.x+=0.5;
+    cube.position.z-=10;
     scene.add(cube);
-  
+
+    var roomGeo = new BoxGeometry(10, 5, 10);
+    var roomMat = new MeshPhongMaterial( { 
+      color: 0xffffff,
+      transparent: false,
+      side: BackSide
+    } );
+
+    var roomMesh = new Mesh(roomGeo, roomMat);
+    roomMesh.rotation.x+=0.5;
+    roomMesh.position.z-=10;
+    scene.add( roomMesh );
+
+    // const loader = new GLTFLoader();
+    // loader.load('chair.glb', function(glb) {
+    //   console.log(glb)
+    //   const root = glb.scene;
+    //   scene.add(root);
+    // },
+    // function (xhr) {
+    //     console.log(xhr.loaded/xhr.total * 100 + '% loaded') 
+    // }, function (error) {
+    //   console.log("An error has occured", error)
+    // })
+
+    // const asset = Asset.fromModule(require("../screens/chair.obj"));
+    // await asset.downloadAsync();
+
+    // const loader = new OBJLoader();
+    // // load a resource
+    // loader.load(
+    //   // resource URL
+    //   asset.localUri,
+    //   // called when resource is loaded
+    //   function ( object ) {
+    //       object.scale.set(0.065, 0.065, 0.065)
+    //       scene.add( object );
+    //       camera.lookAt(object.position)
+    //   //rotate my obj file
+    //       function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
+    //           object.rotateX(THREE.Math.degToRad(degreeX));
+    //           object.rotateY(THREE.Math.degToRad(degreeY));
+    //           object.rotateZ(THREE.Math.degToRad(degreeZ));
+    //        }
+           
+    //        // usage:
+    //        rotateObject(object, 0, 0, 70);
+
+    //       //animate rotation
+    //       function update() {
+    //           object.rotation.x += 0.015
+    //       }
+    //       const render = () => {
+    //           timeout = requestAnimationFrame(render);
+    //           update();
+    //           renderer.render(scene, camera);
+    //           gl.endFrameEXP();
+    //         };
+    //       render();
+    //   },
+     
+    //   // called when loading is in progresses
+    //   function ( xhr ) {
+
+    //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+    //   },
+    //   // called when loading has errors
+    //   function ( error ) {
+
+    //       console.log( error );
+
+    //   }
+    // )
+      
     const light = new THREE.DirectionalLight(0xFFD580, 2, 100 ); // switch statement for light colour
     light.position.set(3,3,3);
     scene.add(light);
@@ -42,7 +118,7 @@ export default function Visualise({navigation}) {
     
     const render = () => {
       requestAnimationFrame(render);
-      cube.rotation.y+=0.005;
+      //cube.rotation.y+=0.005;
       renderer.render(scene, camera);
       gl.endFrameEXP();
     };
@@ -168,18 +244,17 @@ const styles = StyleSheet.create({
       fontSize: 16
     },
     visual: {
-      width: "80%", 
-      flex: 6,
-      margin: 10,
-      backgroundColor: "#1e1e1e"
+      width: "100%", 
+      flex: 8,
+      margin: 5,
     },
     notifications: {      
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
-      width: "80%",
+      width: "95%",
       flex: 2,
-      margin: 10,
+      margin: 5,
       backgroundColor: "#1e1e1e",
     },
     controls: {
@@ -189,9 +264,9 @@ const styles = StyleSheet.create({
       paddingRight: 10,
       justifyContent: "space-around",
       alignItems: "center",
-      width: "80%",
+      width: "95%",
       flex: 1,
-      margin: 10,
+      margin: 5,
       backgroundColor: "#1e1e1e"
     },
     camera: {
