@@ -1,15 +1,53 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import Header from '../info/Header';
 export default function Profile({navigation}) {
+    const [text, onChangeText] = React.useState();
+    const [number, onChangeNumber] = React.useState(null);
     return (
         <View style={styles.container}>
             <View style={styles.options}>
-                <Header headerText="Your profile settings"/>
+                <Header headerText="Account Settings"/>
                 <Text style={styles.hintText}>Email</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                    keyboardType={"default"}
+                />
                 <Text style={styles.hintText}>Current Password</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                />
                 <Text style={styles.hintText}>New Password</Text>
-                <Text style={styles.hintText}>Notifications</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                />
+
+
+                <Header headerText="Visual Settings"/>
+                <Text style={styles.hintText}>Room Height and Width</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                />                
+                <Text style={styles.hintText}>Wall Material</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                />
+                <Text style={styles.hintText}>Floor Material</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={text}
+                />
             </View>
         </View>
     );
@@ -37,9 +75,18 @@ const styles = StyleSheet.create({
     hintText: {
         color: "white",
         fontSize: 12,
-        paddingBottom: 5,
-        marginLeft: 20
-    }
+        marginLeft: "6%",
+        marginBottom: "2.5%"
+    },
+    input: {
+        color: "white",
+        height: "6%",
+        width: "90%",
+        marginLeft: "6%",
+        marginBottom: "5%",
+        backgroundColor: "#121212",
+        padding: 10,
+      },
 });
 /*
   

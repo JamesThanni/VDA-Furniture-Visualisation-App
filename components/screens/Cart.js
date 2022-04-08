@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#121212'
     },
     cart: {
-        flex: 5, 
+        flex: 8, 
          display: "flex", 
          alignItems: 'flex-start', 
          justifyContent: 'flex-start', 

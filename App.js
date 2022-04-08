@@ -14,19 +14,21 @@ export default function App({navigation}) {
   const [currentView, setCurrentView] = React.useState("Splash");
   
   return(   
-      <View style={{backgroundColor: "#121212", flex: 1}}>
-        {
-          currentView === "Splash" ?
-          <Splash onPress={page => setCurrentView(page)}/> :
-          <Guide/>
-        }
-      </View>
-  
+    <Guide/>  
   );
 
 }
 
   /*
+
+  <View style={{backgroundColor: "#121212", flex: 1}}>
+        {
+          currentView === "Splash" ?
+          <Splash onPress={page => setCurrentView(page)}/> :
+          
+        }
+      </View>
+      
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>

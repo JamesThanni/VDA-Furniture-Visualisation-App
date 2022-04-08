@@ -1,9 +1,9 @@
 // Three.js Utilities
 import { GLView } from 'expo-gl';
 import ExpoTHREE, {Renderer} from 'expo-three';
-import { BoxGeometry, MeshPhongMaterial, BackSide } from 'three';
-import { Scene, Mesh, OrthographicCamera, AmbientLight, PointLight} from 'three';
-
+import { BoxGeometry, MeshPhongMaterial, BackSide, GridHelper } from 'three';
+import { Scene, Mesh, OrthographicCamera, AmbientLight, PointLight, FaceColors, Camera} from 'three';
+import OrbitControlsView from 'expo-three-orbit-controls';
 // Model loading
 import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
@@ -22,9 +22,10 @@ export default function Visualise({navigation}) {
   let timeout; 
   // a variable that will be used for handling the rendering component over a period of time
 
-  let camera; 
+  let camera;
   //the camera of the Three.js scene declared on a higher level of scope for other uses
 
+  let decor;
   React.useEffect(() => {
     return () => clearTimeout(timeout); 
     // Clear the animation loop when the component unmounts
@@ -37,25 +38,33 @@ export default function Visualise({navigation}) {
     var D=1; 
     // a constant that will affect camera frustum size
     
-    const scene = new Scene(); 
-    // the environment for objects to be placed in.
     
-    camera = new OrthographicCamera(-D*aspectRatio, D*aspectRatio, D, -D, 1, 1000);
-    // the object that allows the scene objects to be viewed.
-    //camera = new PerspectiveCamera(75, gl.drawingBufferWidth/gl.drawingBufferHeight,      0.1,      1000  );
+    
+    // SCENE
+    const scene = new Scene(); // the environment for objects to be placed in.
 
-    const renderer = new Renderer({gl});
-    renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
-    // an object that renders the scene to be viewed, loading objects and lighting in.
+    
+    // CAMERA 
+    camera = new OrthographicCamera(-D*aspectRatio, D*aspectRatio, D, -D, 1, 1000);// the object that allows the scene objects to be viewed.
+    camera.position.set(20, 20, 20);
+    camera.lookAt(scene.position);  
+    
 
-    const geometry = new BoxGeometry(0.1, 0.1, 0.1);
-    // tells us the shape and dimensions of the object.
-    const material = new MeshPhongMaterial({color: 0xffffff,});
-    // tells us the material and texture color of the object.
-    const cube = new Mesh(geometry, material);
-    //apply shape and texture of object to a mesh to make it a 3d object
-    //scene.add(cube);
-    //add our mesh to the scene
+    // LIGHTING
+    
+    const ambience = new AmbientLight(0xffe4b8, 0.7);
+    scene.add( ambience ); 
+    // // light that gives the room a tinted warm glow
+
+    const light = new PointLight(0xffffff, 1.45, 40)
+    light.position.set(15, 20, 10);
+    scene.add(light);
+    // // light that adds brightness to the scene making objects visible
+
+    //GRID 
+    const grid = new GridHelper(10,10);
+    scene.add(grid);
+    // OBJETS
 
     var roomGeo = new BoxGeometry(1, 0.5, 1);
     var roomMat = new MeshPhongMaterial( { 
@@ -68,47 +77,31 @@ export default function Visualise({navigation}) {
     scene.add( roomMesh );
     //do the same as the cube for the room
 
-    const ambience = new AmbientLight(0xffe4b8, 0.7);
-    scene.add( ambience ); 
-    // // light that gives the room a tinted warm glow
-
-    const light = new PointLight(0xffffff, 1.45, 40)
-    light.position.set(15, 20, 10);
-    scene.add(light);
-    // // light that adds brightness to the scene making objects visible
-
-    camera.position.set(20, 20, 20);
-    camera.lookAt(scene.position);
-
-    // const keyLight = new DirectionalLight( new THREE.Color('hsl(30, 100%, 75%)'), 1.0);
-    // keyLight.position.set(-100, 0, 100);
-
-    // const fillLight = new DirectionalLight(new THREE.Color('hsl(240, 100%, 75%)'), 0.75);
-    // fillLight.position.set(100,0,100);
-
-    // const backLight = new DirectionalLight(0xffffff, 1.0);
-    // backLight.position.set(100, 0, -100).normalize();
-
-    // scene.add(keyLight);
-    // scene.add(fillLight);
-    // scene.add(backLight);
     
 
-    const asset = Asset.fromModule(require('./chair.obj'));
+    const asset = Asset.fromModule(require("./chair.obj"));
     await asset.downloadAsync();
 
-    const matAsset = Asset.fromModule(require('./chair.mtl'));
+    const matAsset = Asset.fromModule(require("./chair.mtl"));
     await matAsset.downloadAsync();
-
+    
+    const loader = new OBJLoader();
     const mtlLoader = new MTLLoader();
-    mtlLoader.load( matAsset.localUri, function( materials ) {
+    
+    mtlLoader.load( matAsset.localUri,  function ( materials ) {
         materials.preload();
+        //console.log(materials);
 
-        const loader = new OBJLoader();
-        loader.load(asset.localUri, function ( object ) {
-
-            scene.add( object );
-            object.scale.set(0.25,0.25,0.25);
+        loader.setMaterials(materials);
+        loader.load(asset.localUri, 
+          
+          function ( object ) {
+            decor = object;
+            decor.scale.set(0.3,0.3,0.3);  
+            scene.add( decor );
+            
+                    
+            
         
         
           },
@@ -121,22 +114,36 @@ export default function Visualise({navigation}) {
           // called when loading has errors
           function ( error ) {
 
-            console.log( 'An error happened' );
+            console.log( 'An error occured ' , error );
 
           }
         );
-    });
 
-
-    const render = () => {
-      timeout = requestAnimationFrame(render);
-      renderer.render(scene, camera);
-      gl.endFrameEXP();
-    }; 
-    render();
-    // render the scene by getting animation frames
-
+        // RENDERER
+        const renderer = new Renderer({gl});
+        renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
+        // an object that renders the scene to be viewed, loading objects and lighting in.
         
+
+        const render = () => {
+          timeout = requestAnimationFrame(render);
+          renderer.render(scene, camera);
+          gl.endFrameEXP();
+        }; 
+        render();
+        // render the scene by getting animation frames
+      }, 
+      (xhr) => {
+        console.log((xhr.loaded/ xhr.total) * 100 + '% loaded')
+      }, 
+      (error) => {
+        console.log('An error occured.', error)
+    }
+
+    );
+    
+    
+
   };// the main threejs application
  
 
@@ -148,7 +155,9 @@ export default function Visualise({navigation}) {
                 key = "d"
               />
           <View style={styles.controls}>
-            <Ionicons name={"expand"} size={20} color={"#72B93A"}/>
+            <TouchableOpacity>
+              <Ionicons name={"expand"} size={20} color={"#72B93A"}/>
+            </TouchableOpacity>
             <Ionicons name={"refresh"} size={20} color={"#72B93A"}/>
             <Ionicons name={"bulb"} size={20} color={"#72B93A"}/>
             <Ionicons name={"caret-up"} size={15} color={"#c4c4c4"}/>
@@ -156,10 +165,7 @@ export default function Visualise({navigation}) {
             <Ionicons name={"caret-back"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-forward"} size={15} color={"#c4c4c4"}/>
           </View>
-          <View style={styles.notifications}>
-            <Header headerText="Visual Console"/>
-            <Text style={styles.info}>No issues with objects</Text>
-          </View>
+          
           
         </View>
     );
@@ -179,7 +185,7 @@ const styles = StyleSheet.create({
     },
     visual: {
       width: "95%", 
-      flex: 8,
+      flex: 10,
       margin: 5,
       marginTop: 20
     },
@@ -222,12 +228,34 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       alignItems: 'center',
     }
-  });
+  }
+  );
 
 // CSS styling for components in the scene that is translated to respective styling code for android and ios
 
   /*
 
+
+  <View style={styles.notifications}>
+            <Header headerText="Visual Console"/>
+            <Text style={styles.info}>No issues with objects</Text>
+          </View>
+
+    // const keyLight = new DirectionalLight( new THREE.Color('hsl(30, 100%, 75%)'), 1.0);
+    // keyLight.position.set(-100, 0, 100);
+
+    // const fillLight = new DirectionalLight(new THREE.Color('hsl(240, 100%, 75%)'), 0.75);
+    // fillLight.position.set(100,0,100);
+
+    // const backLight = new DirectionalLight(0xffffff, 1.0);
+    // backLight.position.set(100, 0, -100).normalize();
+
+    // scene.add(keyLight);
+    // scene.add(fillLight);
+    // scene.add(backLight);
+    
+
+    
     //gl.canvas = {width: gl.drawingBufferWidth, height: gl.drawingBufferHeight}
       
   //const [camera, setCamera] = React.useState<Camera | null>(null);
@@ -440,3 +468,13 @@ const styles = StyleSheet.create({
     // const light = new THREE.DirectionalLight(0xFFD580, 2, 100 ); // switch statement for light colour
     // light.position.set(3,3,3);
     // scene.add(light);
+    //camera = new PerspectiveCamera(75, gl.drawingBufferWidth/gl.drawingBufferHeight,      0.1,      1000  );
+
+    // const geometry = new BoxGeometry(0.1, 0.1, 0.1);
+    // // tells us the shape and dimensions of the object.
+    // const material = new MeshPhongMaterial({color: 0xffffff,});
+    // // tells us the material and texture color of the object.
+    // const cube = new Mesh(geometry, material);
+    // //apply shape and texture of object to a mesh to make it a 3d object
+    // //scene.add(cube);
+    // //add our mesh to the scene

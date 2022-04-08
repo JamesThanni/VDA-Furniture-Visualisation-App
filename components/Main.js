@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Settings } from 'react-native';
+import { View, PanResponder, Animated, Text, Settings } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
