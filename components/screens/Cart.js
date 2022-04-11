@@ -1,91 +1,125 @@
-import * as React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import Header from '../info/Header';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProductListItem from '../info/ProductListItem';
-import ProductImages from '../info/ProductImages';
-import ProductCartItem from '../info/ProductCartItem';
-import AppButton from './../input/AppButton';
-export default function Cart({navigation}) {
-    
-    const [cart, setCart] = React.useState([
-        {id:"6", name:"Painting", material:"Canvas", price:"17.99", img:"painting"}
-    ]);
+import React, {useEffect, useState, useContext} from "react";
+import {View, Image, Text, Button, FlatList, StyleSheet} from "react-native";
+import {CartContext} from "../../CartContext.js";
+import AppButton from "../input/AppButton.js";
 
-    function removeFromCart(product){
-        ProductListItem.cart.pop(product); //ERROR CHECK FOR IF CONTAINS PRODUCT
+export default function Cart({navigation}){
+    const {items, getItemsCount, getTotalPrice} = useContext(CartContext);
+
+    function Totals(){
+        let [total, setTotal] = useState(0);
+        useEffect(() => {
+            setTotal(getTotalPrice())
+        })
+        return(
+            <View style={styles.cartLineTotal}>
+                <Text style={[styles.lineLeft, styles.lineTotal]}>Cart Total</Text>
+                <Text style={styles.mainTotal}>£ {total}</Text>
+            </View>
+        )
     }
 
-    function addToVisual(){
-        cart.forEach(element => {
-            
-        });
+    function renderItem({item}){
+        return(
+            <View>
+                <View style={styles.cartLine}>
+                    <Image style={styles.image} source={item.product.image} />
+                    <View style={styles.quantity}>
+                        <Text style={styles.quantityText}>{item.qty}</Text>
+                    </View>
+                    <Text style={styles.lineLeft}>
+                        {item.product.name} - 
+                        <Text style={styles.productTotal}> £{item.totalPrice}</Text>
+                    </Text>
+                    
+                </View>
+                
+            </View>
+        )
     }
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.cart}>
-                <Header headerText="Your cart"/> 
-                { 
-                    cart.map(cartItem => 
-                        <ProductCartItem
-                        key={cartItem.id} 
-                        name={cartItem.name} 
-                        material={cartItem.material} 
-                        price={cartItem.price} 
-                        img={cartItem.img}/>
-                )
-                }
-                
-                
-                
-                
-            </View>
-            <View style={styles.checkout}>
-                <Header headerText={"Checkout"}/>
-                <Text style={{fontWeight: "200", marginLeft: 15, marginBottom: 50, color: "white"}}> TOTAL: £17.99</Text>
+    return(
+        <FlatList
+            style={styles.itemsList}
+            contentContainerStyle={styles.itemsListContainer}
+            data={items}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={Totals}
+        />
+        
+    )
 
-            </View>
-            <View style={{display: 'flex', flexDirection: "row", alignItems: 'center', justifyContent: "center"}}>
-            <AppButton text="Purchase Item" function={addToVisual()}/>
-            <AppButton text="Add to Visual"/>
-            </View>
-        </View>
-    );
 }
 
-// Placeholder page for cart list and price totaling. Will have option to add to visual. Extended functionality to add checkout section.
 const styles = StyleSheet.create({
-
-    container : {
-        paddingTop: "10%",
-        flex: 1, 
-        display: "flex",    
-        alignItems: 'center', 
-        justifyContent: 'center',
-        backgroundColor: '#121212'
-    },
-    cart: {
-        flex: 8, 
-         display: "flex", 
-         alignItems: 'flex-start', 
-         justifyContent: 'flex-start', 
-         width: "95%", 
-         marginBottom: "5%",
-         backgroundColor: '#1e1e1e',
-         borderRadius: 10
-    },
-    checkout: {
-        flex: 2, 
-         display: "flex", 
-         alignItems: 'flex-start', 
-         justifyContent: 'flex-start', 
-         width: "95%", 
-         marginBottom: "5%",
-         backgroundColor: '#1e1e1e',
-         borderRadius: 10
-    },
    
-
-
-});
+	cartLine: {
+		flexDirection: 'row',
+		width: '100%',
+		padding: 10,
+        borderRadius: 10,
+        backgroundColor: "#1e1e1e",
+        marginBottom: "2%"
+	},
+	image: {
+		width: '25%',
+		aspectRatio: 1,
+		marginRight: 5,
+        resizeMode: 'contain',
+	},
+    quantity: {
+        backgroundColor: "#72B93A",
+        borderRadius: 100,
+        padding: 5,
+        height: "30%",
+        width:"7.5%",
+        marginLeft: -30,
+        marginRight: 10,
+        alignItems: "center"
+    },
+    quantityText: {
+        color: "white",
+        fontWeight: "800",
+        fontSize: 12
+    },
+	cartLineTotal: {
+		flexDirection: 'row',
+        padding: 10
+	},
+	productTotal: {
+        color: 'white',
+		fontWeight: 'bold'
+	},
+	lineTotal: {
+        color: 'white',
+		fontWeight: 'bold'
+	},
+	lineLeft: {
+		fontSize: 16,
+		lineHeight: 40,
+		color: 'white'
+	},
+	lineRight: {
+		fontSize: 20,
+		fontWeight: 'bold',
+		color: 'white',
+		textAlign: 'left',
+	},
+	mainTotal: {
+		flex: 1,
+		fontSize: 20,
+		fontWeight: 'bold',
+		lineHeight: 40,
+		color: 'white',
+		textAlign: 'right'
+	},
+	itemsList: {
+		backgroundColor: '#121212'
+	},
+	itemsListContainer: {
+		backgroundColor: '#121212',
+		paddingVertical: 8,
+		marginHorizontal: 8
+	}
+})

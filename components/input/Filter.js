@@ -27,13 +27,16 @@ const styles = StyleSheet.create({
         paddingRight: 18,
         borderRadius: 5,
         marginLeft: 2,
-        marginRight: 2
+        marginRight: 2,
+        height: 30,
+        alignItems: "center"
     },
     filterText: {
         color: '#fff',
-        fontSize: 10,
-        fontWeight: "300",
-        textTransform: "uppercase"
+        fontSize: 12,
+        fontWeight: "500",
+        textTransform: "uppercase",
+        textAlign: "center"
     }
 })
 

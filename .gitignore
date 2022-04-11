@@ -60,3 +60,9 @@ node_modules
 *.log
 .DS_Store
 bundle.js
+
+# Other
+.zip
+.blend
+.blend1
+.rar

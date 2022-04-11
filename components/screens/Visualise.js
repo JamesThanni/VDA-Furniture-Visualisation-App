@@ -17,8 +17,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
 import * as React from 'react';
 import { DirectionalLight } from 'three';
+import Visual from '../GeneratedVisual';
 
+// GET CART DATA
+import {CartContext} from "../../CartContext.js"
+import AppButton from '../input/AppButton';
 export default function Visualise({navigation}) {
+
+  const items = React.useContext(CartContext);
+  
+  let [name, setName] = React.useState("");
+  const firstObj = items[0];
+
   let timeout; 
   // a variable that will be used for handling the rendering component over a period of time
 
@@ -49,7 +59,7 @@ export default function Visualise({navigation}) {
     camera.position.set(20, 20, 20);
     camera.lookAt(scene.position);  
     
-
+    const clock = new THREE.Clock();
     // LIGHTING
     
     const ambience = new AmbientLight(0xffe4b8, 0.7);
@@ -62,7 +72,8 @@ export default function Visualise({navigation}) {
     // // light that adds brightness to the scene making objects visible
 
     //GRID 
-    const grid = new GridHelper(10,10);
+    const grid = new GridHelper(10,100);
+    grid.position.set(-1,-1,-1);
     scene.add(grid);
     // OBJETS
 
@@ -71,23 +82,38 @@ export default function Visualise({navigation}) {
       color: 0xffffff,
       transparent: false,
       side: BackSide
-    } ); 
-    // we make the back two sides of the cube transparent to give it a open room look
+    } ); // we make the back two sides of the cube transparent to give it a open room look
+    /* 
+    }, {image: `{profileWall}-texture.jpg`,
+      side: LeftSide
+    },
+    {image: `{profileWall}-texture.jpg`,
+      side: RightSide
+    }
+    {image: `{profileFloor}-texture.jpg`,
+      side: BottomSide
+    });
+    */
+
+    
     var roomMesh = new Mesh(roomGeo, roomMat);
     scene.add( roomMesh );
     //do the same as the cube for the room
 
     
 
-    const asset = Asset.fromModule(require("./chair.obj"));
+    const asset = Asset.fromModule(require("./../../assets/armchair/chair.obj"));
     await asset.downloadAsync();
+    //const objAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.obj`));
 
-    const matAsset = Asset.fromModule(require("./chair.mtl"));
+    const matAsset = Asset.fromModule(require("./../../assets/armchair/chair.mtl"));
     await matAsset.downloadAsync();
+    //const matAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.mtl`));
+    
     
     const loader = new OBJLoader();
     const mtlLoader = new MTLLoader();
-    
+    var decorNo = 0;
     mtlLoader.load( matAsset.localUri,  function ( materials ) {
         materials.preload();
         //console.log(materials);
@@ -97,13 +123,28 @@ export default function Visualise({navigation}) {
           
           function ( object ) {
             decor = object;
-            decor.scale.set(0.3,0.3,0.3);  
+            decor.scale.set(0.2,0.2,0.2);
+            decor.position.set(decorNo, decorNo, decorNo);
             scene.add( decor );
+            decorNo++;
+
+            // RENDERER
+            const renderer = new Renderer({gl});
+            renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
+            // an object that renders the scene to be viewed, loading objects and lighting in.
             
-                    
+
+            const render = () => {
+              timeout = requestAnimationFrame(render);
+              const time = clock.getElapsedTime();  
+              decor.position.y = Math.cos( time ) * 0.025;
+              renderer.render(scene, camera);
+              gl.endFrameEXP();
+              
+            }; 
+            render();
+            // render the scene by getting animation frames
             
-        
-        
           },
           // called when loading is in progresses
           function ( xhr ) {
@@ -119,19 +160,7 @@ export default function Visualise({navigation}) {
           }
         );
 
-        // RENDERER
-        const renderer = new Renderer({gl});
-        renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
-        // an object that renders the scene to be viewed, loading objects and lighting in.
         
-
-        const render = () => {
-          timeout = requestAnimationFrame(render);
-          renderer.render(scene, camera);
-          gl.endFrameEXP();
-        }; 
-        render();
-        // render the scene by getting animation frames
       }, 
       (xhr) => {
         console.log((xhr.loaded/ xhr.total) * 100 + '% loaded')
@@ -153,6 +182,8 @@ export default function Visualise({navigation}) {
                 onContextCreate={onContextCreate}
                 style = {styles.visual}
                 key = "d"
+                objects={""}
+                materials={""}
               />
           <View style={styles.controls}>
             <TouchableOpacity>
@@ -165,6 +196,7 @@ export default function Visualise({navigation}) {
             <Ionicons name={"caret-back"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-forward"} size={15} color={"#c4c4c4"}/>
           </View>
+          {/* <Text style={styles.info}>{firstObj}</Text>  */}
           
           
         </View>
@@ -181,7 +213,8 @@ const styles = StyleSheet.create({
     info: {
       color: "white",
       marginLeft: 20,
-      fontSize: 16
+      fontSize: 16,
+      padding: 10
     },
     visual: {
       width: "95%", 

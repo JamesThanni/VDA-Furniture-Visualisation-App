@@ -1,60 +1,68 @@
-import * as React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import ProductListItem from '../info/ProductListItem';
-import Header from '../info/Header';
-import Filter from '../input/Filter';
+import React, {useEffect, useState} from "react";
+import {View, Text, FlatList, StyleSheet} from "react-native";
+import { getProducts } from "../../db/ProductData";
+import {Product} from "../info/Product";
+import Filter from "../input/Filter";
+import {getCategories} from '../../db/Categories'
 
-//import {uuid} from 'uuidv4';
-export default function Home({navigation}) {
-    const [products, setProducts] = React.useState([
-        {id: "1", dcName:'Classic Sofa', dcMaterial:'Brown Leather', img: 'sofa', category: "Chair", price: "£299.99"},
-        {id: "2", dcName:'Chic Armchair', dcMaterial:'Grey Fabric', img: 'armchair', category: "Chair", price: "£299.99"},
-        {id: "3", dcName:'Simple Foldable', dcMaterial:'Black Plastic', img: 'foldable', category: "Chair", price: "£299.99"},
-        {id: "4", dcName:'Modern Stool', dcMaterial:'Blue Suede', img: 'stool', category: "Chair", price: "£299.99"}
-        ]); // object array where each product is an object with various properties for display info
+export default function Home({navigation}){
 
-    const categories = [
-        {catNo: 2, cat: "Chairs"},
-        {catNo: 3, cat: "Desks"}, 
-        {catNo: 4, cat: "Wall Art"}, 
-        {catNo: 5, cat: "Shelving"}
-    ];
+    function renderProduct({item: product}){
+        return(
+            <Product 
+                {...product}
+                onPress={() => {
+                    navigation.navigate('ProductInfo', {productId: product.id})
+                }}
+            />
+        )
+    }
 
-    return (
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        setProducts(getProducts())
+    })
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        setCategories(getCategories())
+    })
+
+    return(
         <View style={styles.container}>
-            
-            <View style={styles.filters}>   
-            
-            <Filter category={"All"} status={true}/>
 
-            {
-                categories.map(category => 
-                    <Filter key={category.catNo} category={category.cat} status={false}/>
-            )
-            }             
-            
+            <View style={styles.filters}>
+                {
+                    categories.map(category => 
+                        <Filter key={category.catNo} category={category.cat} status={false}/>
+                )
+                }
             </View>
 
-            {
-                products.map(product => 
-                    <ProductListItem 
-                    key={product.id} 
-                    name={product.dcName} 
-                    material={product.dcMaterial} 
-                    price={product.price} 
-                    img={product.img}/>
-                )
-            }
-
+            <FlatList 
+                style={styles.productsList}
+                contentContainerStyle={styles.productsListContainer}
+                keyExtractor={(item, index) => index.toString()}
+                data={products}
+                renderItem={renderProduct}
+            />
         </View>
-    );
+    )
+
 }
-// products - list of product objects with ids, names, material types, images etc
-// categories - tags to filter the list of products displayed by the category property
-// Filters View - List of filters for filtering. Map categories list to display all filters as seperate components.
-// Products View - List of Products with info. Map products list to display all products as seperate components.
 
 const styles = StyleSheet.create({
+    productsList: {
+      backgroundColor: "#121212",
+      width: "100%"
+    },
+    productsListContainer: {
+      backgroundColor: "#121212",
+      paddingVertical: 8,
+      marginHorizontal: 8,
+    },
     container: {
         paddingTop: 20,
         flex: 1,
@@ -69,4 +77,5 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "flex-start"
     }
-})
+  });
+  

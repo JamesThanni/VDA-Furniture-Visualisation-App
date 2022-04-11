@@ -7,84 +7,120 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Visualise from './screens/Visualise';
-import Home from './screens/Home';
-import Cart from './screens/Cart';
+import Home from './screens/Home.js';
+import Cart  from "./screens/Cart.js";
 import Profile from './screens/Profile';
 import AppSettings from './screens/AppSettings';
-
+import Filter from "./input/Filter";
+// Shop pages
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ProductInfo } from "./screens/Info.js";
+import { CartProvider } from "../CartContext.js";
+import { CartButton } from "./input/CartButton.js"
 
 // Names of screens
-const homePage = "Browse";
+const homePage = "Products";
 const cartPage = "Cart"
 const visualPage = 'Visualise';
 const profilePage = "Profile"
 const settingsPage = "Settings";
 
 
+const HomeStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-export default function Main() {
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator
+    screenOptions={({route}) => ({
+        "headerStyle" : {
+            "backgroundColor": "#121212", 
+            "borderBottomColor": "transparent",
+            "shadowColor": "transparent",                    
+            "elevation":0
+        },  
+        "headerTitleStyle" : {
+            "fontSize": 18, 
+            "color": "#ffffff",
+        },  
+    })}>
+        <HomeStack.Screen name="Home" component={Home} options={({navigation}) => ({title: '', headerLeft: () => <Filter category={"Filter by: All"} status={true}/>, headerRight: () => <CartButton navigation={navigation} />})} />
+        <HomeStack.Screen name="ProductInfo" component={ProductInfo} options={({navigation}) => ({title: '', headerRight: () => <CartButton navigation={navigation} />})} />
+    </HomeStack.Navigator>
+  );
+}
+
+
+
+
+function Main() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-            initialRouteName={homePage}
-            screenOptions={({route}) => ({
-                "headerStyle" : {
-                    "backgroundColor": "#121212", 
-                    "borderBottomColor": "transparent",
-                    "shadowColor": "transparent",                    
-                    "elevation":0
-                },                
-                "tabBarActiveTintColor": '#72B93A',
-                "tabBarInactiveTintColor": '#ffffff',
-                "headerTitleStyle" : {
-                    "fontSize": 18, 
-                    "color": "#ffffff",
-                },
-                "tabBarLabelStyle": {                    
-                    "paddingBottom": "5%", 
-                    "fontSize": 12,
-                },
-                "tabBarStyle" :{
-                    "padding": 10,
-                    "height": '12%',
-                    "backgroundColor": '#121212',
-                    "borderTopWidth": 0,
-                                    
-                },
-                tabBarIcon: ({focused, color, size}) => {
-                    let iconName;
-                    let rn = route.name;
+        <CartProvider>
+            <NavigationContainer>
+                <Tab.Navigator
+                
+                initialRouteName={homePage}
+                screenOptions={({route}) => ({
+                    "headerStyle" : {
+                        "backgroundColor": "#121212", 
+                        "borderBottomColor": "transparent",
+                        "shadowColor": "transparent",                    
+                        "elevation":0
+                    },  
+                    "headerTitleStyle" : {
+                        "fontSize": 18, 
+                        "color": "#ffffff",
+                    },              
+                    "tabBarActiveTintColor": '#72B93A',
+                    "tabBarInactiveTintColor": '#ffffff',
+                    
+                    "tabBarLabelStyle": {                    
+                        "paddingBottom": "5%", 
+                        "fontSize": 12,
+                    },
+                    "tabBarStyle" :{
+                        "padding": 10,
+                        "height": '12%',
+                        "backgroundColor": '#121212',
+                        "borderTopWidth": 0,
+                                        
+                    },
+                    tabBarIcon: ({focused, color, size}) => {
+                        let iconName;
+                        let rn = route.name;
 
-                    if (rn === homePage) {
-                        iconName = focused ? 'home' : 'home-outline';
-                    } else if (rn === cartPage) {
-                        iconName = focused ? 'cart' : 'cart-outline'; 
-                    } else if (rn === visualPage) {
-                        iconName = focused ? 'layers' : 'layers-outline';
-                    } else if (rn === profilePage) {
-                        iconName = focused ? 'person' : 'person-outline';
-                    } else if (rn === settingsPage) { 
+                        if (rn === homePage) {
+                            iconName = focused ? 'home' : 'home-outline';
+                        } else if (rn === cartPage) {
+                            iconName = focused ? 'cart' : 'cart-outline'; 
+                        } else if (rn === visualPage) {
+                            iconName = focused ? 'layers' : 'layers-outline';
+                        } else if (rn === profilePage) {
+                            iconName = focused ? 'person' : 'person-outline';
+                        } else if (rn === settingsPage) { 
+                            
+                            iconName = focused ? 'cog' : 'cog-outline';
+                        }
                         
-                        iconName = focused ? 'cog' : 'cog-outline';
-                    }
+                        return <Ionicons name={iconName} size={size} color={color}/>
+                        
+                    },
                     
-                    return <Ionicons name={iconName} size={size} color={color}/>
+                })}
+                /*</NavigationContainer>*/
+                >      
+                <Tab.Screen name={homePage} component={HomeStackScreen}/>    
+                <Tab.Screen name={cartPage} component={Cart}/>        
+                <Tab.Screen name={visualPage} component={Visualise}/>
+                <Tab.Screen name={profilePage} component={Profile}/>
+                <Tab.Screen name={settingsPage} component={AppSettings}/>
+                
                     
-                },
-                
-            })}
-            /*</NavigationContainer>*/
-            >      
-            <Tab.Screen name={homePage} component={Home}/>    
-            <Tab.Screen name={cartPage} component={Cart}/>        
-            <Tab.Screen name={visualPage} component={Visualise}/>
-            <Tab.Screen name={profilePage} component={Profile}/>
-            <Tab.Screen name={settingsPage} component={AppSettings}/>
-                
 
-            </Tab.Navigator>
-            
-        </NavigationContainer>
+                </Tab.Navigator>
+                
+            </NavigationContainer>
+        </CartProvider>
         /*
         Navigation Container - The main container for the views users will navigate through based on the selected window in the bottom navbar
         Tab Navigator - the controller for selected tab
@@ -93,5 +129,6 @@ export default function Main() {
         */
     );
 }
+export default Main;
 
 

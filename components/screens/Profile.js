@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import Header from '../info/Header';
+import AppButton from '../input/AppButton';
 export default function Profile({navigation}) {
     const [text, onChangeText] = React.useState();
     const [number, onChangeNumber] = React.useState(null);
     return (
         <View style={styles.container}>
             <View style={styles.options}>
+                {/* 
                 <Header headerText="Account Settings"/>
                 <Text style={styles.hintText}>Email</Text>
                 <TextInput
@@ -27,15 +29,9 @@ export default function Profile({navigation}) {
                     onChangeText={onChangeNumber}
                     value={text}
                 />
+                */}
 
-
-                <Header headerText="Visual Settings"/>
-                <Text style={styles.hintText}>Room Height and Width</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={onChangeNumber}
-                    value={text}
-                />                
+                <Header headerText="Visual Settings"/>          
                 <Text style={styles.hintText}>Wall Material</Text>
                 <TextInput
                     style={styles.input}
@@ -48,6 +44,7 @@ export default function Profile({navigation}) {
                     onChangeText={onChangeNumber}
                     value={text}
                 />
+                <AppButton text="Submit" function={""}/>
             </View>
         </View>
     );
@@ -63,7 +60,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#121212'
     },
     options: {
-        flex: 5, 
          display: "flex", 
          alignItems: 'flex-start', 
          justifyContent: 'flex-start', 
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     },
     input: {
         color: "white",
-        height: "6%",
+        height: "10%",
         width: "90%",
         marginLeft: "6%",
         marginBottom: "5%",

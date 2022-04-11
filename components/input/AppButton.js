@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
         paddingRight: 30,
         backgroundColor: '#72B93A',
         borderRadius: 10,
-        margin: 5
+        margin: 20
     },
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: 'bold'
     }
 });
