@@ -17,7 +17,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
 import * as React from 'react';
 import { DirectionalLight } from 'three';
-import Visual from '../GeneratedVisual';
 
 // GET CART DATA
 import {CartContext} from "../../CartContext.js"
