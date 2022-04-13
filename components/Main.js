@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Visualise from './screens/Visualise';
 import Home from './screens/Home.js';
 import Cart  from "./screens/Cart.js";
-import Profile from './screens/Profile';
+import Configure from './screens/Configure';
 import AppSettings from './screens/AppSettings';
 import Filter from "./input/Filter";
 // Shop pages
@@ -22,7 +22,7 @@ import { CartButton } from "./input/CartButton.js"
 const homePage = "Products";
 const cartPage = "Cart"
 const visualPage = 'Visualise';
-const profilePage = "Profile"
+const configurePage = "Configure"
 const settingsPage = "Settings";
 
 
@@ -33,19 +33,20 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator
     screenOptions={({route}) => ({
-        "headerStyle" : {
-            "backgroundColor": "#121212", 
-            "borderBottomColor": "transparent",
-            "shadowColor": "transparent",                    
-            "elevation":0
-        },  
-        "headerTitleStyle" : {
-            "fontSize": 18, 
-            "color": "#ffffff",
-        },  
+        headerShown: false
+        // "headerStyle" : {
+        //     "backgroundColor": "#121212", 
+        //     "borderBottomColor": "transparent",
+        //     "shadowColor": "transparent",                    
+        //     "elevation":0
+        // },  
+        // "headerTitleStyle" : {
+        //     "fontSize": 18, 
+        //     "color": "#ffffff",
+        // },  
     })}>
-        <HomeStack.Screen name="Home" component={Home} options={({navigation}) => ({title: '', headerLeft: () => <Filter category={"Filter by: All"} status={true}/>, headerRight: () => <CartButton navigation={navigation} />})} />
-        <HomeStack.Screen name="ProductInfo" component={ProductInfo} options={({navigation}) => ({title: '', headerRight: () => <CartButton navigation={navigation} />})} />
+        <HomeStack.Screen name="Home" component={Home} options={({navigation}) => ({title: 'Browse Products', headerRight: () => <CartButton navigation={navigation} />})} />
+        <HomeStack.Screen name="ProductInfo" component={ProductInfo} options={({navigation}) => ({title: 'Browse Products', headerRight: () => <CartButton navigation={navigation} />})} />
     </HomeStack.Navigator>
   );
 }
@@ -58,7 +59,6 @@ function Main() {
         <CartProvider>
             <NavigationContainer>
                 <Tab.Navigator
-                
                 initialRouteName={homePage}
                 screenOptions={({route}) => ({
                     "headerStyle" : {
@@ -68,12 +68,11 @@ function Main() {
                         "elevation":0
                     },  
                     "headerTitleStyle" : {
-                        "fontSize": 18, 
+                        "fontSize": 24, 
                         "color": "#ffffff",
                     },              
-                    "tabBarActiveTintColor": '#72B93A',
-                    "tabBarInactiveTintColor": '#ffffff',
-                    
+                    "tabBarActiveTintColor": '#ffffff',
+                    "tabBarInactiveTintColor": '#ffffff',        
                     "tabBarLabelStyle": {                    
                         "paddingBottom": "5%", 
                         "fontSize": 12,
@@ -95,7 +94,7 @@ function Main() {
                             iconName = focused ? 'cart' : 'cart-outline'; 
                         } else if (rn === visualPage) {
                             iconName = focused ? 'layers' : 'layers-outline';
-                        } else if (rn === profilePage) {
+                        } else if (rn === configurePage) {
                             iconName = focused ? 'person' : 'person-outline';
                         } else if (rn === settingsPage) { 
                             
@@ -109,10 +108,10 @@ function Main() {
                 })}
                 /*</NavigationContainer>*/
                 >      
-                <Tab.Screen name={homePage} component={HomeStackScreen}/>    
+                <Tab.Screen name={homePage} component={HomeStackScreen}/>   
                 <Tab.Screen name={cartPage} component={Cart}/>        
                 <Tab.Screen name={visualPage} component={Visualise}/>
-                <Tab.Screen name={profilePage} component={Profile}/>
+                <Tab.Screen name={configurePage} component={Configure}/>
                 <Tab.Screen name={settingsPage} component={AppSettings}/>
                 
                     

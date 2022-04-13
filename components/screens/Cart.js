@@ -48,18 +48,22 @@ export default function Cart({navigation}){
             ListFooterComponent={Totals}
         />
         
+        
     )
 
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#121212"
+    },
    
 	cartLine: {
 		flexDirection: 'row',
 		width: '100%',
 		padding: 10,
         borderRadius: 10,
-        backgroundColor: "#1e1e1e",
+        backgroundColor: "#121212",
         marginBottom: "2%"
 	},
 	image: {
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
 	},
     quantity: {
-        backgroundColor: "#72B93A",
+        backgroundColor: "#976A35",
         borderRadius: 100,
         padding: 5,
         height: "30%",
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
 	},
 	lineTotal: {
         color: 'white',
-		fontWeight: 'bold'
+		fontWeight: '300'
 	},
 	lineLeft: {
 		fontSize: 16,
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
 	mainTotal: {
 		flex: 1,
 		fontSize: 20,
-		fontWeight: 'bold',
+		fontWeight: '300',
 		lineHeight: 40,
 		color: 'white',
 		textAlign: 'right'

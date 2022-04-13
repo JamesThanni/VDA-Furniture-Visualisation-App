@@ -11,12 +11,13 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     header: {
-        margin: 20,
-        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 20,
+        alignItems: 'flex-start',
         justifyContent: 'center'
     },
     text: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: "700",
         color: "#ffffff",
         textAlign: 'center',

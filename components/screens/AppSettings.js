@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import Header from '../info/Header';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SectionMain from '../wrappers/SectionMain';
 
 export default function AppSettings({navigation}) {
     return (
         
         <View style={styles.container}>
-            <View style={styles.options}>
+            <SectionMain>
                 <Header headerText="App Settings"/>
                 <Text style={styles.hintText}>Linked Accounts   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
                 <Text></Text>
@@ -23,7 +24,7 @@ export default function AppSettings({navigation}) {
                 <Text style={styles.hintText}>Support   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
                 <Text></Text>
                 <Text style={styles.hintText}>Logout</Text>
-            </View>
+            </SectionMain>
 
         </View>
     );
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
     hintText: {
         color: "white",
         fontSize: 12,
-        marginLeft: "6%",
         marginBottom: "2.5%"
     },
 

@@ -3,7 +3,7 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Filter = (props) => {
     const colorStyles = {
-        backgroundColor: props.status ? "#72B93A" : "#1e1e1e"
+        backgroundColor: props.status ? "#976A35" : "#1e1e1e"
     };
     
     return (
@@ -23,19 +23,17 @@ const Filter = (props) => {
 const styles = StyleSheet.create({
     filter: {
         padding: 10,
-        paddingLeft: 18,
-        paddingRight: 18,
+        paddingLeft: 25,
+        paddingRight: 25, 
+        marginLeft: 5,
+        marginRight: 5,
         borderRadius: 5,
-        marginLeft: 2,
-        marginRight: 2,
-        height: 30,
-        alignItems: "center"
+        alignItems: "center",
     },
     filterText: {
         color: '#fff',
         fontSize: 12,
-        fontWeight: "500",
-        textTransform: "uppercase",
+        fontWeight: "100",
         textAlign: "center"
     }
 })

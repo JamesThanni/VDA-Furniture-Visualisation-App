@@ -34,6 +34,7 @@ export default function Home({navigation}){
         <View style={styles.container}>
 
             <View style={styles.filters}>
+                <Filter category={"All"} status={true}/>
                 {
                     categories.map(category => 
                         <Filter key={category.catNo} category={category.cat} status={false}/>

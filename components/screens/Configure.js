@@ -2,12 +2,14 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import Header from '../info/Header';
 import AppButton from '../input/AppButton';
-export default function Profile({navigation}) {
+import TextField from '../input/TextField';
+import SectionMain from '../wrappers/SectionMain';
+export default function Configure({navigation}) {
     const [text, onChangeText] = React.useState();
     const [number, onChangeNumber] = React.useState(null);
     return (
         <View style={styles.container}>
-            <View style={styles.options}>
+            <SectionMain>
                 {/* 
                 <Header headerText="Account Settings"/>
                 <Text style={styles.hintText}>Email</Text>
@@ -32,27 +34,24 @@ export default function Profile({navigation}) {
                 */}
 
                 <Header headerText="Visual Settings"/>          
-                <Text style={styles.hintText}>Wall Material</Text>
-                <TextInput
-                    style={styles.input}
+                <Text style={styles.hintText}>Wall Material</Text>                
+                <TextField
                     onChangeText={onChangeNumber}
                     value={text}
                 />
                 <Text style={styles.hintText}>Floor Material</Text>
-                <TextInput
-                    style={styles.input}
+                <TextField
                     onChangeText={onChangeNumber}
                     value={text}
                 />
-                <AppButton text="Submit" function={""}/>
-            </View>
+                <AppButton text="Submit"/>
+            </SectionMain>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container : {
-        paddingTop: "10%",
         flex: 1, 
         display: "flex",    
         alignItems: 'center', 
@@ -71,14 +70,12 @@ const styles = StyleSheet.create({
     hintText: {
         color: "white",
         fontSize: 12,
-        marginLeft: "6%",
         marginBottom: "2.5%"
     },
     input: {
         color: "white",
         height: "10%",
         width: "90%",
-        marginLeft: "6%",
         marginBottom: "5%",
         backgroundColor: "#121212",
         padding: 10,

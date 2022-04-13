@@ -3,8 +3,8 @@ import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 const AppButton = (props) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={props.function}>
-                <Text style={styles.buttonText}>{props.text}</Text>
+        <TouchableOpacity style={styles.button} onPress={props.onPress} {...props}>
+                <Text style={styles.buttonText} {...props}>{props.text}</Text>
         </TouchableOpacity>
     );
 }
@@ -12,12 +12,12 @@ const AppButton = (props) => {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        backgroundColor: '#72B93A',
+        alignItems: 'center',
+        justifyContent: "center",
+        padding: 15,
+        backgroundColor: "#976A35",
         borderRadius: 10,
-        margin: 20
+        width: "50%"
     },
     buttonText: {
         color: '#fff',

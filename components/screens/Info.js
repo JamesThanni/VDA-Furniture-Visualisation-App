@@ -2,6 +2,10 @@ import React, {useEffect, useState, useContext} from 'react';
 import {Text, StyleSheet, View, Image, ScrollView, SafeAreaView, Button} from "react-native";
 import { getProduct } from '../../db/ProductData';
 import {CartContext} from "../../CartContext";
+import AppButton from '../input/AppButton';
+import SectionMain from '../wrappers/SectionMain';
+import SectionSecondary from '../wrappers/SectionSecondary';
+import Header from '../info/Header';
 
 export function ProductInfo({route}) {
 
@@ -22,15 +26,20 @@ export function ProductInfo({route}) {
   return (
     <SafeAreaView  style={styles.container}>
         <ScrollView style={styles.container}>
+          <SectionMain>
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={product.image} />
             </View>
             <View style={styles.infoContainer}>
-                <Text style={styles.name}>{product.name}</Text>
-                <Text style={styles.price}>£ {product.price}</Text>
+                <Header headerText={product.name}/>
+                
                 <Text style={styles.description}>{product.description}</Text>
-                <Button onPress={onAddToCart} title="Add To Cart" />
             </View>
+          </SectionMain>
+          <SectionSecondary>
+            <Text style={styles.price}>£ {product.price}</Text>
+            <AppButton onPress={onAddToCart} text="Add To Cart" />
+          </SectionSecondary>
         </ScrollView>
     </SafeAreaView>
   )
@@ -46,13 +55,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-      width: '25%',
-      height: "100%",
-      aspectRatio: 1
+      flex: 1,
+      width: 200,
+      height: 200,
+      resizeMode: "contain"
     },
     infoContainer: {
       padding: 16,
-      backgroundColor: "#121212"
+      backgroundColor: "#1e1e1e"
     },
     name: {
       fontSize: 22,
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
     description: {
       fontSize: 16,
       fontWeight: '400',
-      color: '#121212',
+      color: 'white',
       marginBottom: 16,
     },
   });

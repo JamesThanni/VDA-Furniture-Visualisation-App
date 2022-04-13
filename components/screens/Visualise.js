@@ -177,6 +177,7 @@ export default function Visualise({navigation}) {
 
   return (
         <View style={{backgroundColor: '#121212', width: '100%', flex: 1, alignItems:"center"}}>
+          <Text style={styles.info}>Visualising: {}</Text>
             <GLView
                 onContextCreate={onContextCreate}
                 style = {styles.visual}
@@ -186,10 +187,10 @@ export default function Visualise({navigation}) {
               />
           <View style={styles.controls}>
             <TouchableOpacity>
-              <Ionicons name={"expand"} size={20} color={"#72B93A"}/>
+              <Ionicons name={"expand"} size={20} color={"#976A35"}/>
             </TouchableOpacity>
-            <Ionicons name={"refresh"} size={20} color={"#72B93A"}/>
-            <Ionicons name={"bulb"} size={20} color={"#72B93A"}/>
+            <Ionicons name={"refresh"} size={20} color={"#976A35"}/>
+            <Ionicons name={"bulb"} size={20} color={"#976A35"}/>
             <Ionicons name={"caret-up"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-down"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-back"} size={15} color={"#c4c4c4"}/>
