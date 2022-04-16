@@ -21,6 +21,7 @@
     "expo-status-bar": "~1.2.0",
     "expo-three": "^6.1.0",
     "expo-three-orbit-controls": "^2.0.0",
+    "formik": "^2.2.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",

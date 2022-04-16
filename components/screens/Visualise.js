@@ -3,17 +3,18 @@ import { GLView } from 'expo-gl';
 import ExpoTHREE, {Renderer} from 'expo-three';
 import { BoxGeometry, MeshPhongMaterial, BackSide, GridHelper } from 'three';
 import { Scene, Mesh, OrthographicCamera, AmbientLight, PointLight, FaceColors, Camera} from 'three';
-import OrbitControlsView from 'expo-three-orbit-controls';
+
 // Model loading
 import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-//Useful custom components
+// Useful custom components
 import Header from '../info/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-//React Utilities
+// React Utilities
 import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
 import * as React from 'react';
 import { DirectionalLight } from 'three';
@@ -21,12 +22,16 @@ import { DirectionalLight } from 'three';
 // GET CART DATA
 import {CartContext} from "../../CartContext.js"
 import AppButton from '../input/AppButton';
+
+
+
+
 export default function Visualise({navigation}) {
 
-  const items = React.useContext(CartContext);
+  // const items = React.useContext(CartContext);
+  // const firstObj = items[0];
+  // let [name, setName] = React.useState("");
   
-  let [name, setName] = React.useState("");
-  const firstObj = items[0];
 
   let timeout; 
   // a variable that will be used for handling the rendering component over a period of time
@@ -35,6 +40,8 @@ export default function Visualise({navigation}) {
   //the camera of the Three.js scene declared on a higher level of scope for other uses
 
   let decor;
+  // variable for the object that is placed in the scene
+
   React.useEffect(() => {
     return () => clearTimeout(timeout); 
     // Clear the animation loop when the component unmounts
@@ -47,8 +54,6 @@ export default function Visualise({navigation}) {
     var D=1; 
     // a constant that will affect camera frustum size
     
-    
-    
     // SCENE
     const scene = new Scene(); // the environment for objects to be placed in.
 
@@ -58,24 +63,26 @@ export default function Visualise({navigation}) {
     camera.position.set(20, 20, 20);
     camera.lookAt(scene.position);  
     
-    const clock = new THREE.Clock();
+
     // LIGHTING
-    
+    const clock = new THREE.Clock();
+      
     const ambience = new AmbientLight(0xffe4b8, 0.7);
+    ambience.position.set(10,10,10)
     scene.add( ambience ); 
-    // // light that gives the room a tinted warm glow
+    // light that gives the room a tinted warm glow
 
     const light = new PointLight(0xffffff, 1.45, 40)
     light.position.set(15, 20, 10);
     scene.add(light);
-    // // light that adds brightness to the scene making objects visible
+    // light that adds brightness to the scene making objects visible
 
     //GRID 
     const grid = new GridHelper(10,100);
     grid.position.set(-1,-1,-1);
     scene.add(grid);
-    // OBJETS
-
+    
+    // OBJECTS
     var roomGeo = new BoxGeometry(1, 0.5, 1);
     var roomMat = new MeshPhongMaterial( { 
       color: 0xffffff,
@@ -108,6 +115,12 @@ export default function Visualise({navigation}) {
     const matAsset = Asset.fromModule(require("./../../assets/armchair/chair.mtl"));
     await matAsset.downloadAsync();
     //const matAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.mtl`));
+
+    // const chairAsset = Asset.fromModule(require("./../../assets/armchair/chair.glb"));
+    // await chairAsset.downloadAsync();
+    
+    // const objLoader = new GLTFLoader().load(chairAsset.localUri, )
+
     
     
     const loader = new OBJLoader();

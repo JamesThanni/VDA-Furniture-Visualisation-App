@@ -16,7 +16,7 @@ import Filter from "./input/Filter";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ProductInfo } from "./screens/Info.js";
 import { CartProvider } from "../CartContext.js";
-import { CartButton } from "./input/CartButton.js"
+import { CartButton } from "./input/CartButton.js";
 
 // Names of screens
 const homePage = "Products";
@@ -107,7 +107,7 @@ function Main() {
                     
                 })}
                 /*</NavigationContainer>*/
-                >      
+                >  
                 <Tab.Screen name={homePage} component={HomeStackScreen}/>   
                 <Tab.Screen name={cartPage} component={Cart}/>        
                 <Tab.Screen name={visualPage} component={Visualise}/>
@@ -117,7 +117,6 @@ function Main() {
                     
 
                 </Tab.Navigator>
-                
             </NavigationContainer>
         </CartProvider>
         /*

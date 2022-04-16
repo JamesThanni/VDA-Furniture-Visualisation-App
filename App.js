@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import Guide from './components/screens/Guide';
+import Login from './components/screens/Login';
 
 export default function App({navigation}) {
-  return <Guide/>;
+  return <Login/>;
 }
