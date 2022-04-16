@@ -8,6 +8,8 @@ import {StatusBar} from 'expo-status-bar';
 
 
 import { Formik } from 'formik';
+
+
 import AppButton from '../input/AppButton';
 import TextField from '../input/TextField';
 import Guide from './Guide';
@@ -18,10 +20,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const LoginPage = ({navigation}) => {
 
     
-    const submitForm = async(valuesToSubmit) =>    {
-        console.log("Email", valuesToSubmit.user, valuesToSubmit.pass);
-        navigation;
-    } 
+    // const submitForm = async(valuesToSubmit) =>    {
+    //     console.log("Email", valuesToSubmit.user, valuesToSubmit.pass);
+    //     navigation;
+    // } 
     const [currentView, setCurrentView] = React.useState("GuidePage");
     return (
         <View style={styles.container}>
@@ -34,17 +36,9 @@ const LoginPage = ({navigation}) => {
                 
                     <Formik
                         initialValues={{user: '', pass: ''}}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            if ( values.user == "admin" && values.pass == "admin"){
-                                console.log("Login succesful");
-                                navigation
-                            }  else {
-                                console.log("Incorrect details")
-                            }
-                        }}
+                        onSubmit={navigation}
                     >
-                        {({ handleChange, handleBlur, handleSubmit, values }) => (
+                        {({ handleChange, handleBlur, submitForm, values }) => (
                             //  {({ handleChange, handleBlur, handleSubmit, values }) => ( 
                             // handleChange happens whenever the input fields change
                             // handleBlur happens when the input fields are not selected by the user
@@ -66,7 +60,7 @@ const LoginPage = ({navigation}) => {
                             />
                             <Text style={styles.msgBox}>...</Text>
                             <View style={styles.centerTwo}>
-                                <AppButton text="Log In" onPress={navigation}/>
+                                <AppButton text="Log In" onPress={submitForm}/>
                                 <View style={styles.seperator}></View>
                                 {/* <AppButton 
                                 text="Sign In With Google"
@@ -152,3 +146,9 @@ const styles = StyleSheet.create({
         padding: 5,
       },
 });
+  // if ( values.user == "admin" && values.pass == "admin"){
+                            //     console.log("Login succesful");
+                            //     navigation
+                            // }  else {
+                            //     console.log("Incorrect details")
+                            // }
