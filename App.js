@@ -1,7 +1,9 @@
 import React from 'react';
-import Guide from './components/screens/Guide';
-import Login from './components/screens/Login';
+import Login from './screens/Login';
+import {LogBox} from 'react-native';
 
+LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release.']);
+LogBox.ignoreLogs(['THREE.FileLoader: HTTP Status 0 received.']);
 export default function App({navigation}) {
   return <Login/>;
 }

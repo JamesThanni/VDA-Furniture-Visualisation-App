@@ -8,7 +8,7 @@ const Filter = (props) => {
     
     return (
         <View>
-            <TouchableOpacity style={[styles.filter, colorStyles]}>
+            <TouchableOpacity style={[styles.filter, colorStyles]} {...props}>
                 <Text style={styles.filterText}>{props.category}</Text>
             </TouchableOpacity>
         </View>

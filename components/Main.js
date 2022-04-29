@@ -1,25 +1,29 @@
 import * as React from 'react';
-import { View, PanResponder, Animated, Text, Settings } from 'react-native';
+import { View, Text, Settings } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { navigationRef } from './../components/nav/Navigator';
+import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import Visualise from './screens/Visualise';
-import Home from './screens/Home.js';
-import Cart  from "./screens/Cart.js";
-import Configure from './screens/Configure';
-import AppSettings from './screens/AppSettings';
-import Filter from "./input/Filter";
+import Visualise from '../screens/Visualise';
+import Home from '../screens/Home.js';
+import Cart  from "../screens/Cart.js"
+import PurchaseScreen from "../scripts/shop/Purchase.js";
+import Configure from '../screens/Configure';
+import AppSettings from '../screens/AppSettings';
+
 // Shop pages
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ProductInfo } from "./screens/Info.js";
+import { ProductInfo } from "../screens/Info.js";
 import { CartProvider } from "../CartContext.js";
 import { CartButton } from "./input/CartButton.js";
 
 // Names of screens
-const homePage = "Products";
+const browsePage = "Products";
 const cartPage = "Cart"
 const visualPage = 'Visualise';
 const configurePage = "Configure"
@@ -27,8 +31,8 @@ const settingsPage = "Settings";
 
 
 const HomeStack = createNativeStackNavigator();
+const CartStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
@@ -52,14 +56,36 @@ function HomeStackScreen() {
 }
 
 
+function CartStackScreen() {
+    return (
+      <CartStack.Navigator
+      screenOptions={({route}) => ({
+          headerShown: false
+      })}>
+          <CartStack.Screen name="Cart" component={Cart}/>
+          <CartStack.Screen name="Purchase" component={PurchaseScreen}/>
+      </CartStack.Navigator>
+    );
+  }
+
+const MyTheme = {
+...DefaultTheme,
+colors: {
+    ...DefaultTheme.colors,
+    background: '#121212'
+},
+};
 
 
 function Main() {
+    
     return (
         <CartProvider>
-            <NavigationContainer>
+            <NavigationContainer 
+            theme={MyTheme}
+            ref={navigationRef}>
                 <Tab.Navigator
-                initialRouteName={homePage}
+                initialRouteName={browsePage}
                 screenOptions={({route}) => ({
                     "headerStyle" : {
                         "backgroundColor": "#121212", 
@@ -68,8 +94,9 @@ function Main() {
                         "elevation":0
                     },  
                     "headerTitleStyle" : {
-                        "fontSize": 24, 
+                        "fontSize": 28, 
                         "color": "#ffffff",
+                        "paddingBottom": 10
                     },              
                     "tabBarActiveTintColor": '#ffffff',
                     "tabBarInactiveTintColor": '#ffffff',        
@@ -88,7 +115,7 @@ function Main() {
                         let iconName;
                         let rn = route.name;
 
-                        if (rn === homePage) {
+                        if (rn === browsePage) {
                             iconName = focused ? 'home' : 'home-outline';
                         } else if (rn === cartPage) {
                             iconName = focused ? 'cart' : 'cart-outline'; 
@@ -108,8 +135,8 @@ function Main() {
                 })}
                 /*</NavigationContainer>*/
                 >  
-                <Tab.Screen name={homePage} component={HomeStackScreen}/>   
-                <Tab.Screen name={cartPage} component={Cart}/>        
+                <Tab.Screen name={browsePage} component={HomeStackScreen}/>   
+                <Tab.Screen name={cartPage} component={CartStackScreen}/>        
                 <Tab.Screen name={visualPage} component={Visualise}/>
                 <Tab.Screen name={configurePage} component={Configure}/>
                 <Tab.Screen name={settingsPage} component={AppSettings}/>

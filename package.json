@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
@@ -21,6 +22,7 @@
     "expo-status-bar": "~1.2.0",
     "expo-three": "^6.1.0",
     "expo-three-orbit-controls": "^2.0.0",
+    "firebase": "^9.6.11",
     "formik": "^2.2.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",

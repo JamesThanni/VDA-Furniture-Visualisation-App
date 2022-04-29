@@ -6,7 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const TextField = ({label, icon, ...props}) => {
     return (
         <View>
-            <TextInput style={styles.textField} onChangeText={props.onChangeText} onBlur={props.onBlur} value={props.value} {...props}/>
+            <TextInput 
+            style={styles.textField} 
+            placeholderTextColor="grey"  
+            onChangeText={props.onChangeText} 
+            onBlur={props.onBlur} 
+            value={props.value} 
+            {...props}/>
         </View>
     )
 }
@@ -18,9 +24,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         height: 60,
         marginVertical: 3,
-        marginBottom: 30,
+        marginBottom: 20,
         color: "white",
         backgroundColor: "#1e1e1e",
+        borderRadius: 15
     },  
 
     leftIcon: {

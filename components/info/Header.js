@@ -21,7 +21,6 @@ const styles = (props) => StyleSheet.create({
         fontWeight: "700",
         color: "#ffffff",
         textAlign: 'center',
-        fontSize: props.fontSize
     }
 })
 

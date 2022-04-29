@@ -1,15 +1,7 @@
 # Virtual-Decor-App - A 3D Furniture Graphics Engine
 ## Description
 
-## Demo
-Video coming soon
-## Packages & Libraries
-- React Native
-- ThreeJS
-- Expo 
-- Expo Three
- 
-## Run in Dev Environment
+## Installation
 ```
 git clone "repo"
 ```
@@ -25,7 +17,19 @@ npm install
 npm install expo
 ```
 
-## Roadmap
+## Packages & Libraries
+- React Native
+- React Navigation
+- React Native Vector Icons
+- Firebase
+- ThreeJS
+- Expo 
+- Expo Three
+
+## Demo
+Video coming soon
+
+ ## Roadmap
 
 
 ## Contributors
