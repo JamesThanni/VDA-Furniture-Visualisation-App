@@ -1,4 +1,4 @@
-# Virtual-Decor-App - A 3D Furniture Graphics Engine
+# Virtual Decor Application - A Furniture E-Commerce/Shop App with 3D Graphics for visualising objects in your room!
 ## Description
 
 ## Installation

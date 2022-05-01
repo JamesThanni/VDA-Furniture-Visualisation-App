@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
-import Header from '../components/info/Header';
+
+import AppText from '../components/info/AppText';
 
 import SectionMain from '../components/wrappers/SectionMain';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -39,7 +40,7 @@ const LoginPage = ({navigation}) => {
                 {/* Logo */}
                 <View style={styles.center}>
                     <Ionicons name={"bed"} size={48} color={"white"}/>
-                    <Header headerText="Visual Decor" fontSize={32}/>
+                    <AppText type="h1" text="Visual Decor" fontSize={32}/>
                 </View> 
 
                 {/* Input section */}

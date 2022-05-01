@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {View, Text, FlatList, StyleSheet} from "react-native";
 import { getProducts } from "../data/ProductData";
 import {Product} from "../components/info/Product";
-import Filter from "../components/input/Filter";
+import Filter from "../components/nav/Filter";
 import {getCategories} from '../data/Categories';
 
 export default function Home({navigation}){

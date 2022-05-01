@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import Header from '../components/info/Header';
-
+import AppText from '../components/info/AppText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SectionMain from '../components/wrappers/SectionMain';
 
@@ -10,7 +10,7 @@ export default function AppSettings({navigation}) {
         
         <View style={styles.container}>
             <SectionMain>
-                <Header headerText="App Settings"/>
+                <Text style={styles.sectionText} >App Settings</Text>
                 <Text style={styles.hintText}>Linked Accounts   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
                 <Text></Text>
                 <Text style={styles.hintText}>Privacy   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
@@ -50,8 +50,15 @@ const styles = StyleSheet.create({
     },
     hintText: {
         color: "white",
-        fontSize: 12,
+        fontSize: 16,
+        fontWeight: "300",
         marginBottom: "2.5%"
+    }, 
+    sectionText: {
+        color: "white",
+        fontSize: 22,
+        fontWeight: "500",
+        marginBottom: "10%"
     },
 
 }

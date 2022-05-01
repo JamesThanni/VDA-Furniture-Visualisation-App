@@ -1,14 +1,20 @@
 import React, {useEffect, useState, useContext} from "react";
-import {View, Image, Text, FlatList, StyleSheet, ScrollView} from "react-native";
+import {View, Image, Text, TouchableOpacity, FlatList, StyleSheet, ScrollView, Alert} from "react-native";
 import {CartContext} from "../CartContext.js";
 import AppButton from "../components/input/AppButton.js";
 import AppText from "../components/info/AppText.js";
 import * as AppNavigation from '../components/nav/Navigator.js';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Cart({navigation}){
-    const {items, getItemsCount, getTotalPrice} = useContext(CartContext);
+//TODO: rename "item" to "cartProduct" where necessary for syntax clarity
 
-    function Totals(){
+export default function Cart({object, setObject}){
+    const {items, getItemsCount, getTotalPrice, removeCartItem} = useContext(CartContext);
+    var objectName = object.name;
+
+    
+    
+    const Totals = () => {
         
         let [total, setTotal] = useState(0);
         useEffect(() => {
@@ -16,23 +22,37 @@ export default function Cart({navigation}){
         })
         if (items.length > 0) { 
             return(
-                <ScrollView>                    
+                <View style={styles.cartSummary}>                    
                     <View style={styles.cartLineTotal}>
                         <Text style={[styles.lineLeft, styles.lineTotal]}>Total:</Text>
                         <Text style={styles.mainTotal}>£ {total}</Text>                        
                     </View>
                     <AppButton text="Buy Now" onPress={() => AppNavigation.navigate("Purchase")}/>
-                </ScrollView>
+                </View>
             )
         } else {
             return <AppText text="No products in your cart"/>;
         }
     }
-    //console.log(`${items[0].product.name} added to cart`) 
+
+    const createVisualAlert = (product) => {
+        Alert.alert(
+            "Virtual Decor",
+            `Visualising ${product}`,
+            [
+                {text:"Continue", onPress: () => console.log("Continue Pressed")}                
+            ]
+        )
+    };    
+
+    function addToVisual(item) {
+        setObject(item.product); // add to visual
+        createVisualAlert(item.product.name); // alert action
+    }
 
     function renderItem({item}){
         return(
-            <View>
+            <ScrollView>
                 <View style={styles.cartLine}>
                     <Image style={styles.image} source={item.product.image} />
                     <View style={styles.quantity}>
@@ -43,11 +63,18 @@ export default function Cart({navigation}){
                         <Text style={styles.productTotal}> £{item.totalPrice}</Text>
                     </View>
                     
-                </View>
-                
-            </View>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>
+                        <Ionicons name={"layers-outline"} size={24} color={"white"}/> 
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => console.log(`Removing item ${item.product.name}`)}>
+                        <Ionicons name={"close"} size={24} color={"red"}/> 
+                    </TouchableOpacity>
+                    
+                </View>                
+            </ScrollView>
         )
     }
+    //onPress={() => removeItem(item.product.name)}>
 
     return(
         <FlatList
@@ -68,8 +95,21 @@ export default function Cart({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#121212"
+        backgroundColor: "#121212",
+        flex: 1
     },   
+    cartSummary: {
+        marginBottom: "auto",
+    },
+    cartLineOption: {
+        alignItems: "center",
+        justifyContent: "center",
+        height: "50%",
+        width: "12.5%",
+        marginLeft: "auto",        
+        backgroundColor: "#1e1e1e",
+        borderRadius: 10,
+    },
 	cartLine: {
         display: "flex",
 		flexDirection: 'row',
@@ -77,7 +117,7 @@ const styles = StyleSheet.create({
 		padding: 10,
         borderRadius: 10,
         backgroundColor: "#121212",
-        marginBottom: "2%"
+        marginBottom: "auto"
 	},
 	image: {
 		width: '25%',
@@ -100,8 +140,8 @@ const styles = StyleSheet.create({
         fontWeight: "800",
         fontSize: 12
     },
-	cartLineTotal: {
-        display: "flex",
+	cartLineTotal: {        
+        marginBottom: "auto",
 		flexDirection: 'row',
         padding: 10,
 	},
@@ -145,6 +185,7 @@ const styles = StyleSheet.create({
 	itemsListContainer: {
 		backgroundColor: '#121212',
 		paddingVertical: 8,
-		marginHorizontal: 8
+		marginHorizontal: 8,
+        flex: 1
 	}
 })

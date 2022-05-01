@@ -10,13 +10,15 @@ const AppText = (props) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: "200",
         color: "white",
         textAlign: "left",
+        lineHeight: 25,
         padding: 10
     },
     header: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '700',
         color: '#ffffff',
         textAlign: 'center',

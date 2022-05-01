@@ -2,22 +2,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import {View, Image, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import Main from '../components/Main';
-import Header from '../components/info/Header';
+import AppText from '../components/info/AppText';
+import AppButton from '../components/input/AppButton';
 
 const GuidePage = ({onPress}) => (
 
         <View style={styles.container}>
             <Image style={styles.img} source={require("../assets/guide-image.jpg")}/>
-            <Header headerText={'Visualise your Room'}/>
-            <Text style={styles.guideText}>
-                    Pick from a wide range of decor items that fit your space. 
-                    Input the dimensions of your room in the settings page and 
-                    use the visualise button to generate a visualisation of the 
-                    chosen furniture in your room!
-            </Text>
-            <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={styles.buttonText}>Get Started</Text>
-            </TouchableOpacity>
+            <View style={styles.instructions}>
+            <AppText type="h1" text={'Visualise your Room'}/>
+                <Text style={styles.guideText}>
+                        Pick from a wide range of decor items that fit your space. 
+                        Input the dimensions of your room in the settings page and 
+                        use the visualise button to generate a visualisation of the 
+                        chosen furniture in your room!
+                </Text>
+                <AppButton text="Get Started" onPress={onPress}/>
+            </View>
                 
         </View>
         
@@ -26,9 +27,9 @@ const GuidePage = ({onPress}) => (
 // Basic description of the app functionality for new users with nice splash image
 
 export default function Guide({navigation, route}) {
-    const visualPage = 'Place Furniture';
-    const browsePage = "Select Furniture";
-    const settingsPage = "Settings";
+    const VISUALISE_SCREEN = 'Place Furniture';
+    const BROWSE_SCREEN = "Select Furniture";
+    const SETTINGS_SCREEN = "Settings";
 
     const [currentView, setCurrentView] = React.useState("GuidePage");
   
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
         guideText: {
             fontSize: 12, 
             textAlign: 'center',
+            marginTop: 20,
             marginBottom: 30,
             color: '#ffffff',
             width: "95%",
@@ -64,6 +66,11 @@ const styles = StyleSheet.create({
         img: {
             width: "100%",
             height: "65%",
+        },
+        instructions: {
+            padding: 20,
+            width: "100%",
+            textAlign: 'center',
         },
         button: {
             padding: 10,

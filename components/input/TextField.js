@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: "white",
         backgroundColor: "#1e1e1e",
-        borderRadius: 15
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: "#2e2e2e"
     },  
 
     leftIcon: {

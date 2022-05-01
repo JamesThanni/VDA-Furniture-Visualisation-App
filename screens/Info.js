@@ -5,8 +5,8 @@ import {CartContext} from "../CartContext";
 import AppButton from '../components/input/AppButton';
 import SectionMain from '../components/wrappers/SectionMain';
 import SectionSecondary from '../components/wrappers/SectionSecondary';
-import Header from '../components/info/Header';
-
+import AppText from '../components/info/AppText';
+import globalStyles from '../styles/GlobalStyles';
 export function ProductInfo({route}) {
 
     const {productId} = route.params;
@@ -24,59 +24,57 @@ export function ProductInfo({route}) {
 
 
   return (
-    <SafeAreaView  style={styles.container}>
-        <ScrollView style={styles.container}>
-          <SectionMain>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={product.image} />
-            </View>
-            <View style={styles.infoContainer}>
-                <Header headerText={product.name}/>
-                <Text style={styles.price}>£ {product.price}</Text>                
-                <Text style={styles.description}>{product.description}</Text>
-            </View>
-          </SectionMain>
-            
-            <AppButton onPress={onAddToCart} text="Add To Cart" />  
-        </ScrollView>
-    </SafeAreaView>
+    
+        <View style={styles.container}>
+                <Image style={styles.image} source={product.image}/>
+                <View style={styles.infoContainer}>
+                  <View style={globalStyles.row}>
+                  <Text style={styles.name}>{product.name}</Text>
+                  <Text style={styles.price}>£{product.price}</Text> 
+                  </View>       
+                                 
+                  <AppText text={product.description}/> 
+                </View>
+                <View style={{marginBottom: "auto"}}>
+                  <AppButton onPress={onAddToCart} text="Add To Cart" />       
+                </View>     
+          
+        </View>
+    
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#121212',
-        height: "100%"
-    },
-    imageContainer: {
-        alignItems: 'center',
-        justifyContent: 'center'
+      flex: 1,
+      backgroundColor: '#121212',
+      height: "100%",
+      padding: 20
     },
     image: {
       flex: 1,
-      width: 200,
-      height: 200,
+      width: "45%",
+      height: "auto",
+      aspectRatio: 2/3,
+      marginVertical: 20,      
+      alignSelf: "center",
       resizeMode: "contain"
     },
     infoContainer: {
-      padding: 16,
-      backgroundColor: "#1e1e1e"
+      flex: 1,
+      paddingHorizontal: 10,
     },
     name: {
-      fontSize: 22,
-      fontWeight: 'bold',
+      fontSize: 25,
+      padding: 10,
+      fontWeight: '600',
       color: "white"
     },
     price: {
-      fontSize: 16,
+      fontSize: 20,
+      padding: 10,
       fontWeight: '600',
       marginBottom: 8,
       color: "white"
-    },
-    description: {
-      fontSize: 16,
-      fontWeight: '400',
-      color: 'white',
-      marginBottom: 16,
     },
   });

@@ -45,16 +45,22 @@ export function CartProvider(props){
         })
     }
 
-    function removeItemFromCart(id){}
+    function removeCartItem(id){
+        setItems(items.filter(item => item.product.id != id));
+    }
 
 
     function completePurchase(){ 
         setItems([]);
         console.log('Items have been purchased or removed', items); // not cleared
     }
+
+    function addToVisual(id) {
+        return getProduct(id);
+    }
     
     return(
-        <CartContext.Provider style={styles.cart} value={{items, setItems, completePurchase, getItemsCount, addItemToCart, getTotalPrice, getCartItems}}>
+        <CartContext.Provider style={styles.cart} value={{items, setItems, removeCartItem, completePurchase, addToVisual, getItemsCount, addItemToCart, getTotalPrice, getCartItems}}>
             {props.children}
         </CartContext.Provider>
     )

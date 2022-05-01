@@ -4,7 +4,7 @@ import {View, StyleSheet, Text} from 'react-native';
 const Header = (props) => {
     return (
         <View style={styles(props).header}>
-            <Text style={styles(props).text}>{props.headerText}</Text>
+            <Text style={styles(props).text}>{props.text}</Text>
         </View>
     );
 }

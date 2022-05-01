@@ -4,9 +4,9 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import Main from '../components/Main';
 
 export default function Splash({navigation, route, onPress}) {
-    const visualPage = 'Place Furniture';
-    const browsePage = "Select Furniture";
-    const settingsPage = "Settings";
+    const VISUALISE_SCREEN = 'Place Furniture';
+    const BROWSE_SCREEN = "Select Furniture";
+    const SETTINGS_SCREEN = "Settings";
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=> {onPress('Guide')}}>
             <Image

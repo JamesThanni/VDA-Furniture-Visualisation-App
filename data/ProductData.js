@@ -22,12 +22,12 @@ const PRODUCTS = [
         height: 1.01,
         type: "chair",
         image: require("../assets/images/armchair.png"),
-        description:
+        description: 
             "6.7-inch Super Retina XDR display with ProMotion for a faster, more responsive feel Cinematic mode adds shallow depth of field and shifts focus automatically in your videos",
     },
     {
         id: 3,
-        name: "Foldable",
+        name: "DeskChair",
         price: 12,
         material: "Black Plastic",
         width: 0.45,
@@ -39,7 +39,7 @@ const PRODUCTS = [
     },
     {
         id: 4,
-        name: "Stool",
+        name: "BarChair",
         price: 20,
         material: "Blue Velvet",
         width: 0.41,

@@ -1,18 +1,6 @@
-// Three.js Utilities
-import { GLView } from 'expo-gl';
-import ExpoTHREE, {Renderer} from 'expo-three';
-import { BoxGeometry, MeshPhongMaterial, BackSide, FrontSide, GridHelper } from 'three';
-import { Scene, Mesh, OrthographicCamera, AmbientLight, PointLight, FaceColors, Camera} from 'three';
-
-// Model loading
-import { Asset } from 'expo-asset';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Useful custom components
-import Header from '../components/info/Header';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AppText from '../components/info/AppText';
 
 // React Utilities
 import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
@@ -25,80 +13,67 @@ import AppButton from '../components/input/AppButton';
 import Visual from '../scripts/visual/Visual';
 
 
-function cycleItems (direction, counter, countOfProducts) {
-  var value;
-  direction == "n" 
-  ? value = counter++
-  : value = counter--
-  
-  return counter < countOfProducts - 1 || counter >=0
-    ? value
-    : counter=0
-  
-}
-
-function FitCheck (props) {
+function VisualAnalysis ({name, dimensions}) {
   const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
-  const [ready, setReady] = React.useState(false);
 
+  
   var productNames = [];
   items.map(function (item) {productNames.push(item.product.name)})
 
-  var productSizes = [];
-  items.map(function (item) {productSizes.push(item.product.width * item.product.height * item.product.depth)})
-  var roomSize = 10; // get roomSize in state from app settings
-  var objectFit = Math.round((productSizes[0]/roomSize)*100); // productSize[productNo]
 
-  return items.length > 0  
-    ? <Text style={styles.info}>Prod: {productNames[0]}: {objectFit}% space in your room.</Text>
-    : <Text style={styles.info}>Please add products to your cart</Text>
+  // ANALYSIS
+  var roomSize = 10; 
+  //TODO: get roomSize in state from app settings and block visual if room size is null
+  var productSizes = dimensions[0] * dimensions[1] * dimensions[2];
+  //var productSizes = props.decorObject.height * props.decorObject.width * props.decorObject.depth;
+  var objectFit = Math.round((productSizes/roomSize)*100);
+
+  //TODO: replace with object != {}
+  return name != undefined
+    ? <View style={styles.info}>
+        <AppText type="h1" text="Space Analysis"/>
+        <AppText text={`${name}: ${objectFit}% space in your room`}/>
+      </View>
+    : <Text style={styles.info}>Please add products to your cart. The visual will display an example kettle if nothing has been added.</Text>
   
 }
 
-export default function Visualise({navigation}) {
+export default function Visualise(props) {
   //const [counter, setCounter] = React.useState(0);
-  const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);  
+  const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext); 
+  const [sceneLoaded, setSceneLoaded] = React.useState(false);
+
   var productNames = [];
   items.map(function (item) {productNames.push(item.product.name)})
-
   
-  
-  // const [productNo, setProductNo] = React.useState(0); // incremented up to items.length by the selector
-  // //   setProduct { 
-  // //     if productNo != productNames.length -1 {
-  // //       productNo++;   
-  // //     }
-  // // }
-
-  // var productSizes = [];
-  // //volume = arr.reduce((prevValue,curValue) => {
-  // //                    return prevValue * curValue },1);
-  // //items.map(function (item) {roductSizes.push(volume)}  
-  // //
-  // items.map(function (item) {productSizes.push(item.product.width * item.product.height * item.product.depth)})
-  // var roomSize = 10; // get roomSize in state from app settings
-  // var objectFit = Math.round((productSizes[0]/roomSize)*100); // productSize[productNo]
+  var objectName = props.object.name;
+  var objectDimensions = [props.object.height, props.object.width, props.object.depth]
 
   return (
-    <View style={styles.container}>
-      
-      <FitCheck/>
-   
-        <View style={styles.main}>
-          <View style={styles.selector}>
+    
+    <View style={styles.container} {...props}>      
+      <VisualAnalysis name={objectName} dimensions={objectDimensions}/>   
+        <View style={styles.main}>            
+          {
+            sceneLoaded 
+            ? <Visual decorObject={props.object.name}/>
+            : <View styles={styles.main}>
+                <AppButton text={"Visualise Room"} onPress={() => setSceneLoaded(!sceneLoaded)}/>
+              </View>
+          }
+          
+
+          {/* <Text style={styles.info}>The {productNames[0]} takes up x% space in your room.</Text> onPress={setCounter(cycleItems("p", counter,items.length))} */}
+          {/* <View style={styles.selector}>
             <TouchableOpacity style={styles.navButton} >
               <Ionicons name={"caret-up"} size={15} color={"#c4c4c4"}/>
-              <Text style={styles.text}> Prev </Text>
+              <Text style={styles.text}>Prev</Text>
             </TouchableOpacity>
-            
-            
-            <TouchableOpacity style={styles.navButton}>
+          <TouchableOpacity style={styles.navButton}>
               <Text style={styles.text}> Next </Text>
               <Ionicons name={"caret-down"} size={15} color={"#c4c4c4"}/>
             </TouchableOpacity>
           </View>
-          <Visual object={productNames[0]}/>         
-          {/* <Text style={styles.info}>The {productNames[0]} takes up x% space in your room.</Text> onPress={setCounter(cycleItems("p", counter,items.length))} */}
           <View style={styles.controls}>
             <TouchableOpacity>
               <Ionicons name={"expand"} size={20} color={"#976A35"}/>
@@ -109,33 +84,59 @@ export default function Visualise({navigation}) {
             <Ionicons name={"caret-down"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-back"} size={15} color={"#c4c4c4"}/>
             <Ionicons name={"caret-forward"} size={15} color={"#c4c4c4"}/>
-          </View>        
+          </View>         */}
         </View>
       </View>
     );
   }
 
 // We load the 3D scene in the visual section, controls of objects in the controls section and user info in the visual console.
-  
+    // const [productNo, setProductNo] = React.useState(0); // incremented up to items.length by the selector
+  // //   setProduct { 
+  // //     if productNo != productNames.length -1 {
+  // //       productNo++;   
+  // //     }
+  // // }
+  // function cycleItems (direction, counter, countOfProducts) {
+  //   var value;
+  //   direction == "n" 
+  //   ? value = counter++
+  //   : value = counter--
+    
+  //   return counter < countOfProducts - 1 || counter >=0
+  //     ? value
+  //     : counter=0
+    
+  // }
+  // var productSizes = [];
+  // //volume = arr.reduce((prevValue,curValue) => {
+  // //                    return prevValue * curValue },1);
+  // //items.map(function (item) {roductSizes.push(volume)}  
+  // //
+  // items.map(function (item) {productSizes.push(item.product.width * item.product.height * item.product.depth)})
+  // var roomSize = 10; // get roomSize in state from app settings
+  // var objectFit = Math.round((productSizes[0]/roomSize)*100); // productSize[productNo]
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: '#121212', 
+      alignItems:"center",
+      justifyContent: 'center'
+    },
+    main: {
       display: "flex",
       flexDirection: "column",
       flex: 1,
       backgroundColor: '#121212', 
       width: '100%',
-      alignItems:"center"
-    },
-    main: {
-      display: "flex",
-      flexDirection: "row",
-      flex: 1,
-      backgroundColor: '#121212', 
-      width: '100%',
-      alignItems:"center"
+      alignItems:"center", 
+      justifyContent:"center"
     },
     info: {
+      display: "flex",
+      flexDirection: "column",
       color: "white",
       fontSize: 16,
       marginBottom: -100,
@@ -173,20 +174,6 @@ const styles = StyleSheet.create({
       backgroundColor: "rgba(0.5,0.5,0.5,0.5)",
       borderRadius: 10
     },
-    controls: {
-      display: "flex",
-      flexDirection: "column",
-      paddingLeft: 10,
-      paddingRight: 10,
-      justifyContent: "space-around",
-      alignItems: "center",
-      height: "50%",
-      alignSelf: "flex-end",
-      flex: 1,
-      marginLeft: -50,
-      backgroundColor: "rgba(0.5,0.5,0.5,0.5)",
-      borderRadius: 10
-    },
     navButton: {
       alignItems: 'center'
 
@@ -216,7 +203,7 @@ const styles = StyleSheet.create({
 
 
   <View style={styles.notifications}>
-            <Header headerText="Visual Console"/>
+            <AppText type="h1" text="Visual Console"/>
             <Text style={styles.info}>No issues with objects</Text>
           </View>
 

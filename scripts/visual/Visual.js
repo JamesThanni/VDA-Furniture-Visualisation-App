@@ -3,75 +3,147 @@ import { GLView } from 'expo-gl';
 import ExpoTHREE, {Renderer, THREE} from 'expo-three';
 import { BoxGeometry, MeshPhongMaterial, BackSide, FrontSide, DoubleSide, GridHelper } from 'three';
 import { Scene, Mesh, OrthographicCamera, AmbientLight, PointLight, FaceColors, Camera} from 'three';
+import { gsap } from 'gsap';
 
 // Model loading
 import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+
+
 // React Utilities
-import { StyleSheet, Text, View, TouchableOpacity }  from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert }  from 'react-native';
 import * as React from 'react';
 
 // GET CART DATA
 import {CartContext} from "../../CartContext.js"
 
-export default function Visual(props) {
-const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
-  // const items = React.useContext(CartContext);
-  // const firstObj = items[0];
-  // let [name, setName] = React.useState("");
+// UI Components
+import IconButton from '../../components/input/IconButton.js';
+
+export default function Visual({decorObject}) {
+  const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
+  let objPath;
+  let matPath;
+
+  // if (decorObject) {
+  // } else {
+  //   objPath = require('./../../assets/models/sofa.obj');
+  //   matPath = require('./../../assets/models/sofa.mtl');
+  // }
+  try {
+    switch (decorObject.toLowerCase()) {
+      case "armchair":
+          objPath = require('./../../assets/models/armchair.obj');
+          matPath = require('./../../assets/models/armchair.mtl');
+          break;
+      case "barchair": 
+          objPath = require('./../../assets/models/barchair.obj');
+          matPath = require('./../../assets/models/barchair.mtl');   
+          break;
+      case "sofa": 
+          objPath = require('./../../assets/models/sofa.obj');
+          matPath = require('./../../assets/models/sofa.mtl');    
+          break;
+      case "deskchair": 
+          objPath = require('./../../assets/models/deskchair.obj');
+          matPath = require('./../../assets/models/deskchair.mtl');    
+          break;
+    }
+  } catch { 
+          objPath = require('./../../assets/models/example.obj');
+          matPath = require('./../../assets/models/example.mtl'); 
+         //Alert.alert("Virtual Decor","Example object added to visual as no cart products are being visualised. Please select an item to visualise")
+  }
   
+  
+
   var products = [];
   items.map(function (item) {products.push(item.product.name)})
 
-
+  var objectToRender = decorObject;
+  
   let timeout; 
   // a variable that will be used for handling the rendering component over a period of time
 
   let camera;
   //the camera of the Three.js scene declared on a higher level of scope for other uses
 
-  let decor;
-  // variable for the object that is placed in the scene
+  let objectMesh;
+  // variable for the object mesh that is placed in the scene
 
   React.useEffect(() => {
     return () => clearTimeout(timeout); 
     // Clear the animation loop when the component unmounts
   }, []);
-     
+ 
+ 
   const onContextCreate = async ( gl ) => {
     const aspectRatio = gl.drawingBufferWidth/gl.drawingBufferHeight;
     // get the aspect ratio of the GLView (view for the Three.js scene)
 
-    var D=1; 
-    // a constant that will affect camera frustum size
-    // ASSETS 
-    
-    
-
-    const asset = Asset.fromModule(require("./../../assets/armchair/chair.obj"));
+    const asset = Asset.fromModule(objPath);
     await asset.downloadAsync();
-    //const objAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.obj`));
-
-    const matAsset = Asset.fromModule(require("./../../assets/armchair/chair.mtl"));
+  
+    const matAsset = Asset.fromModule(matPath);
     await matAsset.downloadAsync();
-    //const matAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.mtl`));
-
-    const sofaAsset = Asset.fromModule(require("./../../assets/sofa/sofa.obj"));
-    await sofaAsset.downloadAsync();
-
-    const sofaMatAsset = Asset.fromModule(require("./../../assets/sofa/sofa.mtl"));
-    await sofaMatAsset.downloadAsync();
+    // ASSETS 
+    // try {
+    //     switch (objectToRender.toLowerCase()){
+    //       case undefined: 
+    //         asset = Asset.fromModule(sofa);
+    //         await asset.downloadAsync();
+          
+    //         matAsset = Asset.fromModule(sofaMtl);
+    //         await matAsset.downloadAsync();
+        
+    //       case "armchair":
+    //         asset = Asset.fromModule(armchair);
+    //         await asset.downloadAsync();
+            
+    //         matAsset = Asset.fromModule(armchairMtl);
+    //         await matAsset.downloadAsync();
+    //       case "barChair": 
+    //         asset = Asset.fromModule(barChair);
+    //         await asset.downloadAsync();
+            
+    //         matAsset = Asset.fromModule(barChairMtl);
+    //         await matAsset.downloadAsync();
+    //       default: 
+    //         asset = Asset.fromModule(sofa);
+    //         await asset.downloadAsync();
+          
+    //         matAsset = Asset.fromModule(sofaMtl);
+    //         await matAsset.downloadAsync();
+    //     }
+    // } catch {
+    //   asset = Asset.fromModule(sofa);
+    //   await asset.downloadAsync();
     
- 
-    const wallAsset = Asset.fromModule(require("./../../assets/textures/walls.jpg"));
-    await wallAsset.downloadAsync();
-    
+    //   matAsset = Asset.fromModule(sofaMtl);
+    //   await matAsset.downloadAsync();
+    // }
+
+    // if  (objectToRender.toLowerCase() == "armchair") {
+    //   asset = Asset.fromModule(armchair);
+    //   await asset.downloadAsync();
+      
+    //   matAsset = Asset.fromModule(armchairMtl);
+    //   await matAsset.downloadAsync();
+    // } else {
+    //   asset = Asset.fromModule(sofa);
+    //   await asset.downloadAsync();
+      
+    //   matAsset = Asset.fromModule(sofaMtl);
+    //   await matAsset.downloadAsync();
+    // }
+   
     // SCENE
     const scene = new Scene(); // the environment for objects to be placed in.
 
     
     // CAMERA 
+    var D=1; // a constant that will affect camera frustum size
     camera = new OrthographicCamera(-D*aspectRatio, D*aspectRatio, D, -D, 1, 1000);// the object that allows the scene objects to be viewed.
     camera.position.set(20, 20, 20);
     camera.lookAt(scene.position);
@@ -130,22 +202,48 @@ const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
     
     const loader = new OBJLoader();
     const mtlLoader = new MTLLoader();
-    var decorNo = 0;
+
+    
 
 
-    mtlLoader.load( matAsset.localUri,  function ( materials ) {
+    mtlLoader.load( 
+      matAsset.localUri,  
+      function ( materials ) {
         materials.preload();
-        //console.log(materials);
-
         loader.setMaterials(materials);
-        loader.load(asset.localUri, 
-          
+
+        loader.load(
+          asset.localUri, 
           function ( object ) {
-            decor = object;
-            decor.scale.set(0.2,0.2,0.2);
-            decor.position.set(decorNo, decorNo, decorNo);
-            scene.add( decor );
-            decorNo++;
+            objectMesh = object;
+            var scale;
+            
+            try {
+                switch (decorObject.toLowerCase()) {
+                  case "sofa": 
+                    scale = 0.1;
+                    objectMesh.rotation.x = 1.5 * Math.PI; //sofa
+                    objectMesh.rotation.z = 0.5 * Math.PI; //sofa 
+                    break;
+                  case "armchair":
+                    scale = 0.25;  
+                    break;
+                  case "deskchair": 
+                    scale = 0.25;  
+                    break;
+                  case "barchair": 
+                    scale = 0.0025;  
+                    break;
+                }
+            } catch {
+              scale = 1;
+            }
+            objectMesh.scale.set(scale, scale, scale);
+            
+            objectMesh.position.set(0,0,0);
+            scene.add( objectMesh );
+
+            
 
             // RENDERER
             const renderer = new Renderer({gl});
@@ -156,8 +254,8 @@ const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
 
             const render = () => {
               timeout = requestAnimationFrame(render);
-              //const time = clock.getElapsedTime();  
-              //decor.position.y = Math.cos( time ) * 0.025;
+              //const time = clock.getElapsedTime();   //testing animations
+              //objectMesh.position.y = Math.cos( time ) * 0.025; //test animation
               renderer.render(scene, camera);
               gl.endFrameEXP();
               
@@ -195,15 +293,19 @@ const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
   };// the main threejs application
  
     return (
+      <>
         <GLView
               onContextCreate={onContextCreate}
               style = {styles.visual}
               key = "v"
-              object={props.object}
-              objectMaterial={props.objectMaterial}
-              objectSize={props.objectSize}
-              roomSize={props.roomSize}
         />
+        <View style={styles.controls}>
+            <IconButton name="sunny" size={20}/>
+            <IconButton name="moon" size={20}/>
+            <IconButton name="beer" size={20}/>            
+        </View>
+      </>
+        
     );
 }
 
@@ -215,6 +317,68 @@ const styles = StyleSheet.create({
         marginTop: 20,
         zIndex: -1
       },
+      
+    controls: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "75%",
+      flex: 1,
+      marginTop: -250,
+      backgroundColor: "rgba(0,0,0,0.75)",
+      borderRadius: 10
+    },
 })
 
 
+
+// {/* <IconButton name="bulb" size={20}/>     
+// <AppText type="h1" text="||"/>        */}
+ 
+    
+    // if (!objectToRender) {
+    //   var objectPath = `./../../assets/models/sofa.obj`;
+    //   var objectMaterialPath = `./../../assets/models/sofa.mtl`;
+
+    //   const asset = Asset.fromModule(require(objectPath));
+    //   await asset.downloadAsync();
+      
+    //   const matAsset = Asset.fromModule(require(objectMaterialPath));
+    //   await matAsset.downloadAsync();
+
+    // } else {
+    //   var objectPath = `./../../assets/models/${objectToRender}.obj`;
+    //   var objectMaterialPath = `./../../assets/models/${objectToRender}.mtl`;
+
+    //   const asset = Asset.fromModule(require(objectPath));
+    //   await asset.downloadAsync();
+
+    //   const matAsset = Asset.fromModule(require(objectMaterialPath));
+    //   await matAsset.downloadAsync();
+    // }
+    //const objAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.obj`));
+    // armchair = 0.2
+    // barchair = 0.002
+    // sofa scale = 0.1
+    // eames = 0.2
+
+    
+    //const matAsset = Asset.fromModule(require(`./../../assets/${props.name}/${props.name}.mtl`));
+
+    // const sofaAsset = Asset.fromModule(require("./../../assets/sofa/sofa.obj"));
+    // await sofaAsset.downloadAsync();
+
+    // const sofaMatAsset = Asset.fromModule(require("./../../assets/sofa/sofa.mtl"));
+    // await sofaMatAsset.downloadAsync();
+    
+ 
+    // const wallAsset = Asset.fromModule(require("./../../assets/wallAsset/walls.jpg"));
+    // await wallAsset.downloadAsync();
+
+    // const stoolAsset = Asset.fromModule(require("./../../assets/stoolAsset/walls.jpg"));
+    // await stoolAsset.downloadAsync();
+
+    // const stoolMatAsset = Asset.fromModule(require("./../../assets/stoolAsset/stool.mtl"));
+    // await stoolMatAsset.downloadAsync();
+    

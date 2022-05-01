@@ -8,6 +8,10 @@ const globalStyles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#121212",
         padding: 10,
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
 });
 
