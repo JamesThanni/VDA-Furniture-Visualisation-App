@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import {View, Image, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import Main from '../components/Main';
+import Main from '../components/AppStack';
 import AppText from '../components/info/AppText';
 import AppButton from '../components/input/AppButton';
 
@@ -12,10 +12,9 @@ const GuidePage = ({onPress}) => (
             <View style={styles.instructions}>
             <AppText type="h1" text={'Visualise your Room'}/>
                 <Text style={styles.guideText}>
-                        Pick from a wide range of decor items that fit your space. 
-                        Input the dimensions of your room in the settings page and 
-                        use the visualise button to generate a visualisation of the 
-                        chosen furniture in your room!
+                Pick from a wide range of decor items that fit your space. 
+                Add a product to your cart and press the layers icon to 
+                generate a visualisation of the chosen furniture in your room!
                 </Text>
                 <AppButton text="Get Started" onPress={onPress}/>
             </View>

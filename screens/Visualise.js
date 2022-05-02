@@ -32,7 +32,7 @@ function VisualAnalysis ({name, dimensions}) {
     ? <View style={styles.info}>
         <AppText text={`The ${name.toLowerCase()} takes up ${objectFit}% space in your room`}/>
       </View>
-    : <Text style={styles.info}>Please add products to your cart. The visual will display an example kettle if nothing has been added.</Text>
+    : <Text style={styles.info}>Please add products to the visual from your cart. In the meantime, you may interact with the kettle in the scene as an example.</Text>
   
 }
 

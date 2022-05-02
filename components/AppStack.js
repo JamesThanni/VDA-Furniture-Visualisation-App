@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Settings } from 'react-native';
 
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { navigationRef } from './../components/nav/Navigator';
+import { navigationRef } from './nav/Navigator';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -137,9 +137,9 @@ export default function Main() {
                     })}
                 >  
                     <Tab.Screen name={BROWSE_SCREEN} component={HomeStackScreen}/>   
-                    <Tab.Screen name={CART_SCREEN} children={() => <CartStackScreen object={object} setObject={setObject}/>} />
-                    <Tab.Screen name={SETTINGS_SCREEN} component={AppSettings}/>
-                    <Tab.Screen name={VISUALISE_SCREEN} children={()=><Visualise object={object}/>} />                 
+                    <Tab.Screen name={CART_SCREEN} children={() => <CartStackScreen object={object} setObject={setObject}/>} />                    
+                    <Tab.Screen name={VISUALISE_SCREEN} children={()=><Visualise object={object}/>} />
+                    <Tab.Screen name={SETTINGS_SCREEN} component={AppSettings}/>                 
                 </Tab.Navigator>
             </NavigationContainer>
         </CartProvider>

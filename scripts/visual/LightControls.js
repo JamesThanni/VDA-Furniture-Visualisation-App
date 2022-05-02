@@ -3,6 +3,7 @@ import {View, StyleSheet, Alert} from 'react-native';
 import AppText from '../../components/info/AppText';
 import IconButton from '../../components/input/IconButton';
 
+
 export default function LightControls({changeTime}) {
     return (
         <View style={styles.controls}>

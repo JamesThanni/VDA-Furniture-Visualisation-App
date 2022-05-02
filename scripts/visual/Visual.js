@@ -68,7 +68,6 @@ export default function Visual({decorObject, sceneTime, setSceneTime, sceneLoade
   } catch { 
           objPath = require('./../../assets/models/example.obj');
           matPath = require('./../../assets/models/example.mtl'); 
-         //Alert.alert("Virtual Decor","Example object added to visual as no cart products are being visualised. Please select an item to visualise")
   }
   
 

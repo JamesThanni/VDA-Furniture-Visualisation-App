@@ -7,33 +7,25 @@ import SectionMain from '../components/wrappers/SectionMain';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StatusBar} from 'expo-status-bar';
 
-
-import { Formik } from 'formik';
-//formik is used to handle form data
-
 import AppButton from '../components/input/AppButton';
 import TextField from '../components/input/TextField';
 import Guide from './Guide';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { auth } from '../scripts/auth/firebase';
-
+import * as AppNavigation from '../components/nav/Navigator.js';
 
 
 const LoginPage = ({navigation}) => {
-    const [email, setEmail] = React.useState('');
+    const [user, setUser] = React.useState('');
     const [pass, setPass] = React.useState('');
-    
+    //const [msg, setMsg] = React.useState("");
 
     const handleSignUp = () => {
-        auth
-        .createUserWithEmailAndPassword(email, pass) // creates user with email and password in entries
-        .then(userCredentials =>
-            {
-                const user = userCredentials.user;
-                console.log(user.email);
-            })
-            .catch(error => Alert(error.message))
-    }
+        return(user == "admin" && pass == "admin") 
+        ? navigation
+        : () => Alert.alert("Virtual Decor", "Incorrect details. Please use `admin` for both entries.");
+    };
+    
     return (
         <KeyboardAvoidingView style={styles.container} behaviour="padding">
             <SectionMain>
@@ -46,9 +38,9 @@ const LoginPage = ({navigation}) => {
                 {/* Input section */}
                 <View style={styles.formArea}>          
                     <TextField
-                        placeholder="Email"
-                        onChangeText={text=> setEmail(text)}
-                        value={email}
+                        placeholder="User"
+                        onChangeText={text=> setUser(text)}
+                        value={user}
                     />
                     <TextField
                         placeholder="Password"
@@ -56,18 +48,10 @@ const LoginPage = ({navigation}) => {
                         value={pass}
                         secureTextEntry={true}
                     />
-                    <Text style={styles.msgBox}>...</Text>
+                    {/* <Text style={styles.msgBox}>{msg}</Text> */}
                     <View style={styles.centerTwo}>
-                        <AppButton text="Log In" onPress={navigation}/>
-                        <View style={styles.seperator}></View>
-                        <AppButton 
-                        text="Sign In With Google"/>
-                        <Text style={styles.hintText}>
-                            Don't have an account already?
-                        </Text>
-                        <TouchableOpacity onPress={() => handleSignUp}>
-                            <Text style={styles.hintText}>Sign up</Text>
-                        </TouchableOpacity>
+                        <AppButton text="Log In" onPress={handleSignUp()}/>
+                        
                     </View>
 
                 </View>
@@ -142,8 +126,30 @@ const styles = StyleSheet.create({
         padding: 5,
       },
 });
+{/* <View style={styles.seperator}></View>
+                        <AppButton 
+                            text="Sign In With Google"/>
+                        <Text style={styles.hintText}>
+                            Don't have an account already?
+                        </Text>
+                        <TouchableOpacity onPress={() => handleSignUp}>
+                            <Text style={styles.hintText}>Sign up</Text>
+                        </TouchableOpacity> */}
 
-
+//(username, password, navigation) => {
+        // auth
+        // .createUserWithEmailAndPassword(email, pass) // creates user with email and password in entries
+        // .then(userCredentials =>
+        //     {
+        //         const user = userCredentials.user;
+        //         console.log(user.email);
+        //     })
+        //     .catch(error => Alert(error.message))
+        // if (username == "admin" && password == "admin"){
+        //     AppNavigation.navigate('Browse');
+        // }
+    //     {navigation};
+    // }
     // const submitForm = async(valuesToSubmit) =>    {
     //     console.log("Email", valuesToSubmit.user, valuesToSubmit.pass);
     //     navigation;

@@ -11,12 +11,53 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function Cart({object, setObject}){
     const {items, setItems, getTotalPrice, sceneLoaded, setSceneLoaded} = useContext(CartContext);
     
+    function addToVisual(item) {
+        setSceneLoaded(!sceneLoaded); // reset the visual scene
+        setObject(item.product); // add to visual
+        Alert.alert(
+            "Virtual Decor",
+            `Visualising ${item.product.name}`
+        )
+    }
+    function removeFromCart(item) {
+        setSceneLoaded(!sceneLoaded); // reset the visual scene
+        setObject({}); //reset the product being analysed
+        setItems(items.filter(function(remainingItems){ 
+            return remainingItems != item;
+        })); // filter the list for all items that are not the specified item to remove
+        Alert.alert("Virtual Decor", item.product.name + " Removed"); // alert action
+    }
+
+    function renderItem({item}){
+        return(
+            <ScrollView>
+                <View style={styles.cartLine}>
+                    <Image style={styles.image} source={item.product.image} />
+                    <View style={styles.quantity}>
+                        <Text style={styles.quantityText}>{item.qty}</Text>
+                    </View>
+                    <View style={styles.cartInfo}>
+                        <Text style={styles.lineLeft}>{item.product.name}</Text>
+                        <Text style={styles.productTotal}> £{item.totalPrice}</Text>
+                    </View>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>
+                        <Ionicons name={"layers-outline"} size={24} color={"white"}/> 
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => removeFromCart(item)}>
+                        <Ionicons name={"close"} size={24} color={"red"}/> 
+                    </TouchableOpacity>
+                    
+                </View>                
+            </ScrollView>
+        )
+    }
+
     const CartTotals = () => {        
         let [total, setTotal] = useState(0);
         useEffect(() => {
             setTotal(getTotalPrice())
         })
-        
+
         if (items.length > 0) { 
             return(
                 <View style={styles.cartSummary}>                    
@@ -32,57 +73,9 @@ export default function Cart({object, setObject}){
         }
     }
 
-    const createVisualAlert = (product) => {
-        Alert.alert(
-            "Virtual Decor",
-            `Visualising ${product}`,
-            [
-                {text:"Continue"}                
-            ]
-        )
-    };    
-
-    function addToVisual(item) {
-        setSceneLoaded(!sceneLoaded); // reset the visual scene
-        setObject(item.product); // add to visual
-        createVisualAlert(item.product.name); // alert action
-    }
-
-    function removeFromCart(item) {
-        setSceneLoaded(!sceneLoaded); // reset the visual scene
-        setObject({}); //reset the product being analysed
-        setItems(items.filter(function(remainingItems){ 
-            return remainingItems != item;
-        })); // filter the list for all items that are not the specified item to remove
-        Alert.alert(item.product.name + " Removed"); // alert action
-    }
-
-    function renderItem({item}){
-        return(
-            <ScrollView>
-                <View style={styles.cartLine}>
-                    <Image style={styles.image} source={item.product.image} />
-                    <View style={styles.quantity}>
-                        <Text style={styles.quantityText}>{item.qty}</Text>
-                    </View>
-                    <View style={styles.cartInfo}>
-                        <Text style={styles.lineLeft}>{item.product.name}</Text>
-                        <Text style={styles.productTotal}> £{item.totalPrice}</Text>
-                    </View>
-                    
-                    <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>
-                        <Ionicons name={"layers-outline"} size={24} color={"white"}/> 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cartLineOption} onPress={() => removeFromCart(item)}>
-                        <Ionicons name={"close"} size={24} color={"red"}/> 
-                    </TouchableOpacity>
-                    
-                </View>                
-            </ScrollView>
-        )
-    }
     
-    return(
+    
+    return (
         <FlatList
             style={styles.itemsList}
             contentContainerStyle={styles.itemsListContainer}

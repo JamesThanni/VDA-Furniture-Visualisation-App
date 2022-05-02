@@ -51,7 +51,7 @@ export function CartProvider(props){
 
     function completePurchase(){ 
         setItems([]);
-        console.log('Items have been purchased or removed', items); // not cleared
+        //console.log('Items have been purchased or removed', items); // not cleared
     }
 
     function addToVisual(id) {
