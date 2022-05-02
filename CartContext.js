@@ -1,13 +1,13 @@
 import React, {createContext, useState} from "react";
-import {getProduct} from "./data/ProductData.js";
-import {View, Text, FlatList, StyleSheet} from "react-native";
+import { getProduct } from "./data/ProductData.js";
+import { StyleSheet } from "react-native";
 
 export const CartContext = createContext();
 
 export function CartProvider(props){
 
     const [items, setItems] = useState([]);
-
+    const [sceneLoaded, setSceneLoaded] = React.useState(false);
     //GETTERS
     function getCartItems(){
         return items;
@@ -49,7 +49,6 @@ export function CartProvider(props){
         setItems(items.filter(item => item.product.id != id));
     }
 
-
     function completePurchase(){ 
         setItems([]);
         console.log('Items have been purchased or removed', items); // not cleared
@@ -60,7 +59,12 @@ export function CartProvider(props){
     }
     
     return(
-        <CartContext.Provider style={styles.cart} value={{items, setItems, removeCartItem, completePurchase, addToVisual, getItemsCount, addItemToCart, getTotalPrice, getCartItems}}>
+        <CartContext.Provider 
+        style={styles.cart} 
+        value={
+            {items, setItems, sceneLoaded, setSceneLoaded, removeCartItem, completePurchase, addToVisual, getItemsCount, addItemToCart, getTotalPrice, getCartItems}
+            }
+        >
             {props.children}
         </CartContext.Provider>
     )

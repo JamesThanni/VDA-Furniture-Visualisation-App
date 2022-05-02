@@ -11,11 +11,10 @@ import { DirectionalLight } from 'three';
 import {CartContext} from "../CartContext.js"
 import AppButton from '../components/input/AppButton';
 import Visual from '../scripts/visual/Visual';
-
+import { Lighting } from '../scripts/visual/Lights';
 
 function VisualAnalysis ({name, dimensions}) {
   const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
-
   
   var productNames = [];
   items.map(function (item) {productNames.push(item.product.name)})
@@ -31,8 +30,7 @@ function VisualAnalysis ({name, dimensions}) {
   //TODO: replace with object != {}
   return name != undefined
     ? <View style={styles.info}>
-        <AppText type="h1" text="Space Analysis"/>
-        <AppText text={`${name}: ${objectFit}% space in your room`}/>
+        <AppText text={`The ${name.toLowerCase()} takes up ${objectFit}% space in your room`}/>
       </View>
     : <Text style={styles.info}>Please add products to your cart. The visual will display an example kettle if nothing has been added.</Text>
   
@@ -40,8 +38,9 @@ function VisualAnalysis ({name, dimensions}) {
 
 export default function Visualise(props) {
   //const [counter, setCounter] = React.useState(0);
-  const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext); 
-  const [sceneLoaded, setSceneLoaded] = React.useState(false);
+  const {items, getItemsCount, getTotalPrice, sceneLoaded, setSceneLoaded} = React.useContext(CartContext); 
+  
+  const [sceneTime, setSceneTime] = React.useState("Morning");
 
   var productNames = [];
   items.map(function (item) {productNames.push(item.product.name)})
@@ -56,7 +55,7 @@ export default function Visualise(props) {
         <View style={styles.main}>            
           {
             sceneLoaded 
-            ? <Visual decorObject={props.object.name}/>
+            ? <Visual decorObject={props.object.name} sceneLoaded={sceneLoaded} setSceneLoaded={setSceneLoaded} sceneTime={sceneTime} setSceneTime={setSceneTime}/>
             : <View styles={styles.main}>
                 <AppButton text={"Visualise Room"} onPress={() => setSceneLoaded(!sceneLoaded)}/>
               </View>

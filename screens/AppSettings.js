@@ -9,20 +9,12 @@ export default function AppSettings({navigation}) {
     return (
         
         <View style={styles.container}>
-            <SectionMain>
-                <Text style={styles.sectionText} >App Settings</Text>
+            <SectionMain>                
                 <Text style={styles.hintText}>Linked Accounts   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
                 <Text style={styles.hintText}>Privacy   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
-                <Text style={styles.hintText}>Residential Details   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
                 <Text style={styles.hintText}>Notifications   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
                 <Text style={styles.hintText}>Terms of Service   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
                 <Text style={styles.hintText}>Support   <Ionicons name={"caret-forward"} size={15} color={"white"}/></Text>
-                <Text></Text>
                 <Text style={styles.hintText}>Logout</Text>
             </SectionMain>
 
@@ -52,7 +44,9 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontWeight: "300",
-        marginBottom: "2.5%"
+        marginBottom: "10%",
+        justifyContent: "space-between",
+        width: "100%"
     }, 
     sectionText: {
         color: "white",

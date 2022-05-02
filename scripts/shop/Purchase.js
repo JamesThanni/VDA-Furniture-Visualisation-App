@@ -9,16 +9,17 @@ import * as AppNavigation from '../../components/nav/Navigator.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function PurchaseScreen ({object, setObject}) {
-    const {items, setItems} = React.useContext(CartContext);
+    const {items, setItems, sceneLoaded, setSceneLoaded} = React.useContext(CartContext);
     
     //consider use effect to clear cart on page load
 
     function purchaseItems(action) {
         //clearCart(action);
+        if (action) setSceneLoaded(!sceneLoaded);
         if (action) setItems([]);
         if (action) setObject([]);
-        AppNavigation.navigate('Cart'); //reset cart screen with state
-        AppNavigation.navigate('Home');
+        AppNavigation.navigate('CartScreen'); //reset cart screen with state
+        //AppNavigation.navigate('Home');
         // add to order history
     }
 

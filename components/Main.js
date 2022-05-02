@@ -87,7 +87,7 @@ export default function Main() {
             >
                 
                 <Tab.Navigator
-                    initialRouteName={SETUP_SCREEN}
+                    initialRouteName={BROWSE_SCREEN}
                     screenOptions={({route}) => ({
                         "headerStyle" : {
                             "backgroundColor": "#121212", 
@@ -136,7 +136,6 @@ export default function Main() {
                         
                     })}
                 >  
-                    <Tab.Screen name={SETUP_SCREEN} component={SetupScreen}/>
                     <Tab.Screen name={BROWSE_SCREEN} component={HomeStackScreen}/>   
                     <Tab.Screen name={CART_SCREEN} children={() => <CartStackScreen object={object} setObject={setObject}/>} />
                     <Tab.Screen name={SETTINGS_SCREEN} component={AppSettings}/>

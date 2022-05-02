@@ -9,17 +9,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 //TODO: rename "item" to "cartProduct" where necessary for syntax clarity
 
 export default function Cart({object, setObject}){
-    const {items, getItemsCount, getTotalPrice, removeCartItem} = useContext(CartContext);
-    var objectName = object.name;
-
+    const {items, setItems, getTotalPrice, sceneLoaded, setSceneLoaded} = useContext(CartContext);
     
-    
-    const Totals = () => {
-        
+    const CartTotals = () => {        
         let [total, setTotal] = useState(0);
         useEffect(() => {
             setTotal(getTotalPrice())
         })
+        
         if (items.length > 0) { 
             return(
                 <View style={styles.cartSummary}>                    
@@ -40,14 +37,24 @@ export default function Cart({object, setObject}){
             "Virtual Decor",
             `Visualising ${product}`,
             [
-                {text:"Continue", onPress: () => console.log("Continue Pressed")}                
+                {text:"Continue"}                
             ]
         )
     };    
 
     function addToVisual(item) {
+        setSceneLoaded(!sceneLoaded); // reset the visual scene
         setObject(item.product); // add to visual
         createVisualAlert(item.product.name); // alert action
+    }
+
+    function removeFromCart(item) {
+        setSceneLoaded(!sceneLoaded); // reset the visual scene
+        setObject({}); //reset the product being analysed
+        setItems(items.filter(function(remainingItems){ 
+            return remainingItems != item;
+        })); // filter the list for all items that are not the specified item to remove
+        Alert.alert(item.product.name + " Removed"); // alert action
     }
 
     function renderItem({item}){
@@ -66,7 +73,7 @@ export default function Cart({object, setObject}){
                     <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>
                         <Ionicons name={"layers-outline"} size={24} color={"white"}/> 
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cartLineOption} onPress={() => console.log(`Removing item ${item.product.name}`)}>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => removeFromCart(item)}>
                         <Ionicons name={"close"} size={24} color={"red"}/> 
                     </TouchableOpacity>
                     
@@ -74,8 +81,7 @@ export default function Cart({object, setObject}){
             </ScrollView>
         )
     }
-    //onPress={() => removeItem(item.product.name)}>
-
+    
     return(
         <FlatList
             style={styles.itemsList}
@@ -83,7 +89,7 @@ export default function Cart({object, setObject}){
             data={items}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={Totals}
+            ListFooterComponent={CartTotals}
         />
         
         

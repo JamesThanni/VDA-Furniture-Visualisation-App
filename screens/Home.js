@@ -4,6 +4,7 @@ import { getProducts } from "../data/ProductData";
 import {Product} from "../components/info/Product";
 import Filter from "../components/nav/Filter";
 import {getCategories} from '../data/Categories';
+import AppText from "../components/info/AppText";
 
 export default function Home({navigation}){
 
@@ -19,28 +20,26 @@ export default function Home({navigation}){
     }
 
     const [products, setProducts] = useState([]);
-
+    
+    const [categories, setCategories] = useState([]);
     useEffect(() => {
         setProducts(getProducts())
-    })
-
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
         setCategories(getCategories())
     })
 
+
+
     return(
         <View style={styles.container}>
-
-            <View style={styles.filters}>
+            <AppText text="Choose from our wide selection!"/>
+            {/* <View style={styles.filters}>
                 <Filter category={"All"} status={true}/>
                 {
                     categories.map(category => 
                         <Filter key={category.catNo} category={category.cat} status={false}/>
                 )
                 }
-            </View>
+            </View> */}
 
             <FlatList 
                 style={styles.productsList}
