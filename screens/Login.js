@@ -38,7 +38,7 @@ const LoginPage = ({navigation}) => {
                 {/* Input section */}
                 <View style={styles.formArea}>          
                     <TextField
-                        placeholder="User"
+                        placeholder="Username"
                         onChangeText={text=> setUser(text)}
                         value={user}
                     />

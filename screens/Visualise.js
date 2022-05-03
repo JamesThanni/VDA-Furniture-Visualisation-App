@@ -13,7 +13,7 @@ import AppButton from '../components/input/AppButton';
 import Visual from '../scripts/visual/Visual';
 import { Lighting } from '../scripts/visual/Lights';
 
-function VisualAnalysis ({name, dimensions}) {
+function VisualAnalysis ({name, title, dimensions}) {
   const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
   
   var productNames = [];
@@ -21,16 +21,15 @@ function VisualAnalysis ({name, dimensions}) {
 
 
   // ANALYSIS
-  var roomSize = 10; 
-  //TODO: get roomSize in state from app settings and block visual if room size is null
-  var productSizes = dimensions[0] * dimensions[1] * dimensions[2];
+  var roomSize = 12; // average room floor size in metres
+  var productSizes = dimensions[1] * dimensions[2]; // floor space taken up the decor object
+
   //var productSizes = props.decorObject.height * props.decorObject.width * props.decorObject.depth;
   var objectFit = Math.round((productSizes/roomSize)*100);
 
-  //TODO: replace with object != {}
   return name != undefined
     ? <View style={styles.info}>
-        <AppText text={`The ${name.toLowerCase()} takes up ${objectFit}% space in your room`}/>
+        <AppText text={`The ${title} takes up ${objectFit}% floor space in an average room.`}/>
       </View>
     : <Text style={styles.info}>Please add products to the visual from your cart. In the meantime, you may interact with the kettle in the scene as an example.</Text>
   
@@ -51,7 +50,7 @@ export default function Visualise(props) {
   return (
     
     <View style={styles.container} {...props}>      
-      <VisualAnalysis name={objectName} dimensions={objectDimensions}/>   
+      <VisualAnalysis name={objectName} title={props.object.title} dimensions={objectDimensions}/>   
         <View style={styles.main}>            
           {
             sceneLoaded 

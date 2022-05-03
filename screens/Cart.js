@@ -16,7 +16,7 @@ export default function Cart({object, setObject}){
         setObject(item.product); // add to visual
         Alert.alert(
             "Virtual Decor",
-            `Visualising ${item.product.name}`
+            `Visualising ${item.product.title}`
         )
     }
     function removeFromCart(item) {
@@ -25,7 +25,7 @@ export default function Cart({object, setObject}){
         setItems(items.filter(function(remainingItems){ 
             return remainingItems != item;
         })); // filter the list for all items that are not the specified item to remove
-        Alert.alert("Virtual Decor", item.product.name + " Removed"); // alert action
+        Alert.alert("Virtual Decor", item.product.title + " Removed"); // alert action
     }
 
     function renderItem({item}){
@@ -37,7 +37,7 @@ export default function Cart({object, setObject}){
                         <Text style={styles.quantityText}>{item.qty}</Text>
                     </View>
                     <View style={styles.cartInfo}>
-                        <Text style={styles.lineLeft}>{item.product.name}</Text>
+                        <Text style={styles.lineLeft}>{item.product.title}</Text>
                         <Text style={styles.productTotal}> £{item.totalPrice}</Text>
                     </View>
                     <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>

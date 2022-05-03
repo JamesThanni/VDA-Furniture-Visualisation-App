@@ -29,7 +29,7 @@ export function ProductInfo({route}) {
                 <Image style={styles.image} source={product.image}/>
                 <View style={styles.infoContainer}>
                   <View style={globalStyles.row}>
-                  <Text style={styles.name}>{product.name}</Text>
+                  <Text style={styles.name}>{product.title}</Text>
                   <Text style={styles.price}>£{product.price}</Text> 
                   </View>       
                                  

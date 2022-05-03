@@ -1,12 +1,12 @@
 import React from "react";
 import {Text, Image, View, StyleSheet, TouchableOpacity} from "react-native";
 
-export function Product({name, price, image, material, onPress}){
+export function Product({name, title, price, image, material, onPress}){
     return(
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <Image style={styles.image} source={image} />
             <View style={styles.infoContainer}>
-                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.name}>{title}</Text>
                 <Text style={styles.material}>{material}</Text>
                 <Text style={styles.price}><Text style={styles.symbol}>£</Text>{price}</Text>
             </View>

@@ -2,6 +2,7 @@ const PRODUCTS = [
     {
         id: 1,
         name: "Sofa",  
+        title: "Leather Sofa",
         price: 650,
         material: "Brown Leather",
         width: 1.99,
@@ -15,6 +16,7 @@ const PRODUCTS = [
     {
         id: 2,
         name: "Armchair",
+        title: "Modern Armchair",
         price: 229,
         material: "Grey Fabric",
         width: 0.82,
@@ -28,6 +30,7 @@ const PRODUCTS = [
     {
         id: 3,
         name: "DeskChair",
+        title: "Eames Desk Chair",
         price: 12,
         material: "Black Plastic",
         width: 0.45,
@@ -40,6 +43,7 @@ const PRODUCTS = [
     {
         id: 4,
         name: "BarChair",
+        title: "Classy Barstool",
         price: 20,
         material: "Blue Velvet",
         width: 0.41,

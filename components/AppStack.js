@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Visualise from '../screens/Visualise';
-import Home from '../screens/Home.js';
+import Home from '../screens/Browse.js';
 import Cart  from "../screens/Cart.js"
 import PurchaseScreen from "../scripts/shop/Purchase.js";
 import SetupScreen from '../screens/SetupScreen';
@@ -27,7 +27,7 @@ const BROWSE_SCREEN = "Browse";
 const CART_SCREEN = "Cart"
 const VISUALISE_SCREEN = 'Visualise';
 const SETUP_SCREEN = "Setup"
-const SETTINGS_SCREEN = "Settings";
+const SETTINGS_SCREEN = "Options";
 
 
 const HomeStack = createNativeStackNavigator();
