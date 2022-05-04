@@ -1,19 +1,15 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Button, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, KeyboardAvoidingView, Alert } from 'react-native';
 
-import AppText from '../components/info/AppText';
+import AppText from '../info/AppText';
 
-import SectionMain from '../components/wrappers/SectionMain';
+import SectionMain from '../containers/PrimarySection';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StatusBar} from 'expo-status-bar';
 
-import AppButton from '../components/input/AppButton';
-import TextField from '../components/input/TextField';
-import Guide from './Guide';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { auth } from '../scripts/auth/firebase';
-import * as AppNavigation from '../components/nav/Navigator.js';
-
+import AppButton from '../input/AppButton';
+import TextField from '../input/TextField';
+import Guide from './GuideScreen';
 
 const LoginPage = ({navigation}) => {
     const [user, setUser] = React.useState('');
@@ -21,18 +17,18 @@ const LoginPage = ({navigation}) => {
     //const [msg, setMsg] = React.useState("");
 
     const handleSignUp = () => {
-        return(user == "admin" && pass == "admin") 
+        return(user.toLowerCase() == "admin" && pass.toLowerCase()  == "admin") 
         ? navigation
         : () => Alert.alert("Virtual Decor", "Incorrect details. Please use `admin` for both entries.");
     };
     
     return (
-        <KeyboardAvoidingView style={styles.container} behaviour="padding">
+        <KeyboardAvoidingView style={styles.loginContainer} behaviour="padding">
             <SectionMain>
                 {/* Logo */}
                 <View style={styles.center}>
                     <Ionicons name={"bed"} size={48} color={"white"}/>
-                    <AppText type="h1" text="Visual Decor" fontSize={32}/>
+                    <AppText type="h1" text="Virtual Decor" fontSize={32}/>
                 </View> 
 
                 {/* Input section */}
@@ -78,7 +74,7 @@ export default function Login({navigation, route}) {
 }  
 
 const styles = StyleSheet.create({
-    container : {
+    loginContainer : {
         flex: 1, 
         display: "flex",    
         alignItems: 'center', 

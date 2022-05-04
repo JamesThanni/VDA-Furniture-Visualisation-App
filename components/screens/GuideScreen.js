@@ -1,14 +1,13 @@
-import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import {View, Image, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import Main from '../components/AppStack';
-import AppText from '../components/info/AppText';
-import AppButton from '../components/input/AppButton';
+import Main from '../AppStack';
+import AppText from '../info/AppText';
+import AppButton from '../input/AppButton';
 
 const GuidePage = ({onPress}) => (
 
-        <View style={styles.container}>
-            <Image style={styles.img} source={require("../assets/guide-image.jpg")}/>
+        <View style={styles.guideContainer}>
+            <Image style={styles.img} source={require("../../assets/images/guide-image.jpg")}/>
             <View style={styles.instructions}>
             <AppText type="h1" text={'Visualise your Room'}/>
                 <Text style={styles.guideText}>
@@ -18,7 +17,6 @@ const GuidePage = ({onPress}) => (
                 </Text>
                 <AppButton text="Get Started" onPress={onPress}/>
             </View>
-                
         </View>
         
     );
@@ -28,7 +26,7 @@ const GuidePage = ({onPress}) => (
 export default function Guide({navigation, route}) {
     const VISUALISE_SCREEN = 'Place Furniture';
     const BROWSE_SCREEN = "Select Furniture";
-    const SETTINGS_SCREEN = "Settings";
+    const OPTIONS_SCREEN = "Settings";
 
     const [currentView, setCurrentView] = React.useState("GuidePage");
   
@@ -46,7 +44,7 @@ export default function Guide({navigation, route}) {
 // moves page to home page when the get started button is selected
 
 const styles = StyleSheet.create({
-        container: {
+        guideContainer: {
             display: 'flex',            
             alignItems: 'center', 
             justifyContent: 'flex-start',
@@ -70,6 +68,7 @@ const styles = StyleSheet.create({
             padding: 20,
             width: "100%",
             textAlign: 'center',
+            alignItems: "center"
         },
         button: {
             padding: 10,

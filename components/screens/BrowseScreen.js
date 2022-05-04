@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, FlatList, StyleSheet} from "react-native";
-import { getProducts } from "../data/ProductData";
-import {Product} from "../components/info/Product";
-import Filter from "../components/nav/Filter";
-import {getCategories} from '../data/Categories';
-import AppText from "../components/info/AppText";
+import { getProducts } from "../../data/ProductData";
+import {Product} from "../info/Product";
+import {getCategories} from '../../data/Categories';
+import AppText from "../info/AppText";
+import MainContainer from "../containers/MainContainer";
 
 export default function Home({navigation}){
 
@@ -20,19 +20,20 @@ export default function Home({navigation}){
     }
 
     const [products, setProducts] = useState([]);
-    
-    const [categories, setCategories] = useState([]);
+    //const [categories, setCategories] = useState([]);
+
     useEffect(() => {
         setProducts(getProducts())
-        setCategories(getCategories())
+        //setCategories(getCategories())
     })
 
 
-
     return(
-        <View style={styles.container}>
-            <AppText text="Choose from our wide selection!"/>
-            {/* <View style={styles.filters}>
+        <MainContainer>
+            <AppText text="Select a product to view its details!"/>
+            {/* 
+                import Filter from "../nav/Filter";
+                <View style={styles.filters}>
                 <Filter category={"All"} status={true}/>
                 {
                     categories.map(category => 
@@ -48,7 +49,7 @@ export default function Home({navigation}){
                 data={products}
                 renderItem={renderProduct}
             />
-        </View>
+        </MainContainer>
     )
 
 }
@@ -62,14 +63,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#121212",
       paddingVertical: 8,
       marginHorizontal: 8,
-    },
-    container: {
-        paddingTop: 20,
-        flex: 1,
-        display: 'flex',         
-        alignItems: "center", 
-        justifyContent: 'center',
-        backgroundColor: '#121212',
     },
     filters: {
         display: "flex",

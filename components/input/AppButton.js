@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: "center",
-        padding: 15,
+        paddingVertical: 15,
+        paddingHorizontal: 40,
         backgroundColor: "#976A35",
         borderRadius: 10,
         width: "75%",
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 'bold'
     }
 });

@@ -1,24 +1,29 @@
+// REACT UTILITIES
 import React, {useEffect, useState, useContext} from "react";
 import {View, Image, Text, TouchableOpacity, FlatList, StyleSheet, ScrollView, Alert} from "react-native";
-import {CartContext} from "../CartContext.js";
-import AppButton from "../components/input/AppButton.js";
-import AppText from "../components/info/AppText.js";
-import * as AppNavigation from '../components/nav/Navigator.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-//TODO: rename "item" to "cartProduct" where necessary for syntax clarity
+// CUSTOM UTILITIES
+import AppButton from "../input/AppButton.js";
+import AppText from "../info/AppText.js";
+import * as AppNavigation from '../nav/Navigator.js';
+
+//DATA 
+import {CartContext} from "../../scripts/context/CartContext.js";
+
 
 export default function Cart({object, setObject}){
     const {items, setItems, getTotalPrice, sceneLoaded, setSceneLoaded} = useContext(CartContext);
     
-    function addToVisual(item) {
+    function addDecorToVisual(item) {
         setSceneLoaded(!sceneLoaded); // reset the visual scene
         setObject(item.product); // add to visual
         Alert.alert(
             "Virtual Decor",
-            `Visualising ${item.product.title}`
+            `The ${item.product.title} is being now visualised!`
         )
     }
+
     function removeFromCart(item) {
         setSceneLoaded(!sceneLoaded); // reset the visual scene
         setObject({}); //reset the product being analysed
@@ -28,7 +33,7 @@ export default function Cart({object, setObject}){
         Alert.alert("Virtual Decor", item.product.title + " Removed"); // alert action
     }
 
-    function renderItem({item}){
+    const CartData = ({item}) => {
         return(
             <ScrollView>
                 <View style={styles.cartLine}>
@@ -40,7 +45,7 @@ export default function Cart({object, setObject}){
                         <Text style={styles.lineLeft}>{item.product.title}</Text>
                         <Text style={styles.productTotal}> £{item.totalPrice}</Text>
                     </View>
-                    <TouchableOpacity style={styles.cartLineOption} onPress={() => addToVisual(item) }>
+                    <TouchableOpacity style={styles.cartLineOption} onPress={() => addDecorToVisual(item) }>
                         <Ionicons name={"layers-outline"} size={24} color={"white"}/> 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cartLineOption} onPress={() => removeFromCart(item)}>
@@ -52,7 +57,7 @@ export default function Cart({object, setObject}){
         )
     }
 
-    const CartTotals = () => {        
+    const CartTotal = () => {        
         let [total, setTotal] = useState(0);
         useEffect(() => {
             setTotal(getTotalPrice())
@@ -60,7 +65,8 @@ export default function Cart({object, setObject}){
 
         if (items.length > 0) { 
             return(
-                <View style={styles.cartSummary}>                    
+                <View style={styles.summaryContainer}>
+                    <AppText text="Press the layers icon to add a cart item to the visual!"/>                    
                     <View style={styles.cartLineTotal}>
                         <Text style={[styles.lineLeft, styles.lineTotal]}>Total:</Text>
                         <Text style={styles.mainTotal}>£ {total}</Text>                        
@@ -69,23 +75,21 @@ export default function Cart({object, setObject}){
                 </View>
             )
         } else {
-            return <AppText text="No products in your cart"/>;
+            return <View style={{alignItems: "center"}}><AppText type="h1" text="Your cart is empty."/><AppText text=" Please add a product to your cart."/></View>;
         }
-    }
-
-    
+    }  
     
     return (
-        <FlatList
-            style={styles.itemsList}
-            contentContainerStyle={styles.itemsListContainer}
-            data={items}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={CartTotals}
-        />
+        <View style={{alignItems: "center"}}>
         
-        
+            <FlatList style={styles.itemsList}
+                contentContainerStyle={styles.itemsListContainer}
+                data={items}
+                renderItem={CartData}
+                keyExtractor={(item, index) => index.toString()}
+                ListFooterComponent={CartTotal}
+            />    
+        </View>
     )
 
 }
@@ -93,12 +97,9 @@ export default function Cart({object, setObject}){
 
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#121212",
-        flex: 1
-    },   
-    cartSummary: {
+    summaryContainer: {
         marginBottom: "auto",
+        alignItems: "center"
     },
     cartLineOption: {
         alignItems: "center",

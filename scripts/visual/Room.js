@@ -11,5 +11,4 @@ export function RoomObject(scene) {
     var roomMat = new THREE.MeshPhongMaterial({color: 0xffffff, transparent: false, side: BackSide});
     var roomMesh = new THREE.Mesh(roomGeo, roomMat);
     scene.add( roomMesh ); //do the same as the cube for the room
-
 }

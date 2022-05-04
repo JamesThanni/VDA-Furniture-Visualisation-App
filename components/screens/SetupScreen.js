@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
-import AppText from '../components/info/AppText';
-import AppButton from '../components/input/AppButton';
-import TextField from '../components/input/TextField';
-import SectionMain from '../components/wrappers/SectionMain';
-import * as AppNavigation from '../components/nav/Navigator.js'; 
+import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import AppButton from '../input/AppButton';
+import TextField from '../input/TextField';
+import SectionMain from '../containers/PrimarySection';
+import * as AppNavigation from '../nav/Navigator.js'; 
+import MainContainer from '../containers/MainContainer';
 
 export default function SetupScreen({navigation}) {
     const [text, onChangeText] = React.useState();
     const [number, onChangeNumber] = React.useState(null);
     return (
-        <View style={styles.container}>
+        <MainContainer>
             <SectionMain>
                 {/* 
                 <AppText type="h1" text="Account Settings"/>
@@ -48,7 +48,7 @@ export default function SetupScreen({navigation}) {
                 />
                 <AppButton text="Submit" onPress={() => AppNavigation.navigate("Browse")}/>
             </SectionMain>
-        </View>
+        </MainContainer>
     );
 }
 
@@ -85,11 +85,3 @@ const styles = StyleSheet.create({
         padding: 10,
       },
 });
-/*
-  
-            <Text style={{fontSize: 26, fontWeight: 'bold', color:'#ffffff'}}>Profile Screen</Text>
-            <Text style={styles.hintText}>Username</Text>
-            <Text style={styles.hintText}>Current Password</Text>
-            <Text style={styles.hintText}>New Password</Text>
-            <Text>Notifications</Text>
-*/

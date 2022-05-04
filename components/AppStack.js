@@ -1,25 +1,22 @@
 import * as React from 'react';
-import { View, Text, Settings } from 'react-native';
-
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { navigationRef } from './nav/Navigator';
-import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import Visualise from '../screens/Visualise';
-import Home from '../screens/Browse.js';
-import Cart  from "../screens/Cart.js"
-import PurchaseScreen from "../scripts/shop/Purchase.js";
-import SetupScreen from '../screens/SetupScreen';
-import AppSettings from '../screens/AppSettings';
+import Visualise from './screens/VisualiseScreen';
+import Home from './screens/BrowseScreen.js';
+import Cart  from "./screens/CartScreen.js"
+import PurchaseScreen from "./screens/PurchaseScreen.js";
+import SetupScreen from './screens/SetupScreen';
+import AppSettings from './screens/OptionsScreen';
 
 // Shop pages
-import { ProductInfo } from "../screens/Info.js";
-import { CartProvider } from "../CartContext.js";
+import { ProductInfo } from "./screens/InfoScreen.js";
+import { CartProvider } from "../scripts/context/CartContext.js";
 import { CartButton } from "./input/CartButton.js";
 
 // Names of screens
@@ -27,7 +24,7 @@ const BROWSE_SCREEN = "Browse";
 const CART_SCREEN = "Cart"
 const VISUALISE_SCREEN = 'Visualise';
 const SETUP_SCREEN = "Setup"
-const SETTINGS_SCREEN = "Options";
+const OPTIONS_SCREEN = "Options";
 
 
 const HomeStack = createNativeStackNavigator();
@@ -94,11 +91,12 @@ export default function Main() {
                             "borderBottomColor": "transparent",
                             "shadowColor": "transparent",                    
                             "elevation":0,
+                            "height": 100
                         },  
                         "headerTitleStyle" : {
-                            "fontSize": 24, 
+                            "fontSize": 28, 
                             "color": "#ffffff",
-                            "paddingBottom": 5,                            
+                            "fontWeight": "800"                            
                         },              
                         "tabBarActiveTintColor": '#ffffff',
                         "tabBarInactiveTintColor": '#ffffff',        
@@ -125,7 +123,7 @@ export default function Main() {
                                 iconName = focused ? 'layers' : 'layers-outline';
                             } else if (rn === SETUP_SCREEN) {
                                 iconName = focused ? 'person' : 'person-outline';
-                            } else if (rn === SETTINGS_SCREEN) { 
+                            } else if (rn === OPTIONS_SCREEN) { 
                                 
                                 iconName = focused ? 'cog' : 'cog-outline';
                             }
@@ -139,12 +137,11 @@ export default function Main() {
                     <Tab.Screen name={BROWSE_SCREEN} component={HomeStackScreen}/>   
                     <Tab.Screen name={CART_SCREEN} children={() => <CartStackScreen object={object} setObject={setObject}/>} />                    
                     <Tab.Screen name={VISUALISE_SCREEN} children={()=><Visualise object={object}/>} />
-                    <Tab.Screen name={SETTINGS_SCREEN} component={AppSettings}/>                 
+                    <Tab.Screen name={OPTIONS_SCREEN} component={AppSettings}/>                 
                 </Tab.Navigator>
             </NavigationContainer>
         </CartProvider>
         /*
-        visualObject={visualObject} setVisual={setVisualObject}
         Navigation Container - The main container for the views users will navigate through based on the selected window in the bottom navbar
         Tab Navigator - the controller for selected tab
         Tab Navigator, ScreenOptions - styling customisation for the navbar. We use an if statement to use different icons for different pages.

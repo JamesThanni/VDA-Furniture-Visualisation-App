@@ -18,14 +18,14 @@ import * as React from 'react';
 
 
 
-export function FloorObject(scene) {
-    var floorSlatGeometry = new BoxGeometry(0.125, 0.005, 1); // change room via dimensions here
-    var floorSlatMat = new MeshPhongMaterial({color: "#9D643B"});
+  export function FloorObject(scene) {
+      var floorSlatGeometry = new BoxGeometry(0.125, 0.005, 1); // change room via dimensions here
+      var floorSlatMat = new MeshPhongMaterial({color: "#9D643B"});
 
-    for (var i = 0; i < 10; i++) {
-      var floor = new Mesh(floorSlatGeometry, floorSlatMat);
-      floor.position.set(-0.475 + (0.126 * i),-0.25,0);
-      scene.add( floor ); //do the same as the cube for the room
-    }
+      for (var i = 0; i < 10; i++) {
+        var floor = new Mesh(floorSlatGeometry, floorSlatMat);
+        floor.position.set(-0.475 + (0.126 * i),-0.25,0);
+        scene.add( floor ); //do the same as the cube for the room
+      }
 
-}
+  }

@@ -1,12 +1,16 @@
+// Third party utilities
 import React, {useEffect, useState, useContext} from 'react';
-import {Text, StyleSheet, View, Image, ScrollView, SafeAreaView, Button} from "react-native";
-import { getProduct } from '../data/ProductData';
-import {CartContext} from "../CartContext";
-import AppButton from '../components/input/AppButton';
-import SectionMain from '../components/wrappers/SectionMain';
-import SectionSecondary from '../components/wrappers/SectionSecondary';
-import AppText from '../components/info/AppText';
-import globalStyles from '../styles/GlobalStyles';
+import {Text, StyleSheet, View, Image, ScrollView, SafeAreaView, Button, Alert} from "react-native";
+
+// Custom utilities
+import { getProduct } from '../../data/ProductData';
+import {CartContext} from "../../scripts/context/CartContext";
+import AppButton from '../input/AppButton';
+import AppText from '../info/AppText';
+import globalStyles from '../../scripts/styles/GlobalStyles';
+import MainContainer from '../containers/MainContainer';
+
+
 export function ProductInfo({route}) {
 
     const {productId} = route.params;
@@ -16,30 +20,31 @@ export function ProductInfo({route}) {
         setProduct(getProduct(productId))
     })
 
-    const {addItemToCart} = useContext(CartContext)
+    const {addItemToCart, getItemQuantity} = useContext(CartContext)
 
     function onAddToCart(){
-      addItemToCart(product.id)
+      addItemToCart(product.id);
+      Alert.alert(`You have added the ${product.title} to your cart.`);
     }
 
 
   return (
     
-        <View style={styles.container}>
+        <MainContainer>
                 <Image style={styles.image} source={product.image}/>
                 <View style={styles.infoContainer}>
                   <View style={globalStyles.row}>
                   <Text style={styles.name}>{product.title}</Text>
                   <Text style={styles.price}>£{product.price}</Text> 
                   </View>       
-                                 
+                  <AppText text={product.material}/> 
                   <AppText text={product.description}/> 
                 </View>
                 <View style={{marginBottom: "auto"}}>
                   <AppButton onPress={onAddToCart} text="Add To Cart" />       
                 </View>     
           
-        </View>
+        </MainContainer>
     
   )
 }

@@ -8,7 +8,7 @@ export default function LightControls({changeTime}) {
     return (
         <View style={styles.controls}>
             <View style={styles.column}>
-                <AppText type="h1" text="Select a room lighting style!"/>
+                <AppText type="h1" text="Lighting Effects"/>
                 <View style={styles.row}>
                     <IconButton name="sunny" size={30} onPress={() => changeTime("Morning")}/>
                     <IconButton name="moon" size={30} onPress={() => changeTime("Night")}/>
@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
       column: {
           flexDirection: 'column',
           alignItems: "center",
-          paddingTop: 20
+          margin: 20
       },
       row: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: -10
       }
 })
 

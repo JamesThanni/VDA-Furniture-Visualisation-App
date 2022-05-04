@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert }  from 'react-native';
 
 // Cart Data for visual
-import {CartContext} from "../../CartContext.js"
+import {CartContext} from "../context/CartContext.js"
 
 // Expo utilities
 import { GLView } from 'expo-gl';
@@ -20,27 +20,29 @@ import LightControls from './LightControls.js';
 import { FloorObject } from './Floor.js';
 import { RoomObject } from './Room.js';
 
+
 export default function Visual({decorObject, sceneTime, setSceneTime, sceneLoaded, setSceneLoaded}) {
+  
   let objPath;
   // a variable that will store path to the specified objects model file
   let matPath;
   // a variable that will store the path to the specified objects model material file
-
   let timeout; 
   // a variable that will be used to stop rendering components when the animation is removed (eg due to errors)
-
   let objectMesh;
-  // variable for the object mesh that is placed in the scene
-  
+  // a variable for the object mesh that is placed in the scene
 
-  const {items, getItemsCount, getTotalPrice} = React.useContext(CartContext);
-  
+  // Clear the animation loop in the visual when the component unmounts (is removed from the screen)
   React.useEffect(() => {
     return () => clearTimeout(timeout); 
-    // Clear the animation loop when the component unmounts
   }, []);
 
   
+  /**
+   * The function changes the time of the scene by changing the state of the sceneLoaded variable to
+   * false, and then changing the sceneTime variable to the time that was passed into the function.
+   * @param time - The time as string to set the scene to.
+   */
   function changeTime(time) {
     setSceneLoaded(!sceneLoaded);
     setSceneTime(time);
@@ -120,9 +122,7 @@ export default function Visual({decorObject, sceneTime, setSceneTime, sceneLoade
     
     
     const mtlLoader = new MTLLoader();
-    mtlLoader.load(
-      matAsset.localUri,  
-      function ( materials ) {
+    mtlLoader.load( matAsset.localUri, function ( materials ) {
         materials.preload();
 
         const loader = new OBJLoader();
@@ -148,7 +148,7 @@ export default function Visual({decorObject, sceneTime, setSceneTime, sceneLoade
                     scale = 0.25;  
                     break;
                   case "barchair": 
-                    scale = 0.0025;  
+                    scale = 0.002;  
                     break;
                 }
             } catch {
@@ -173,16 +173,19 @@ export default function Visual({decorObject, sceneTime, setSceneTime, sceneLoade
         
             const render = () => {
               timeout = requestAnimationFrame(render);
+              //assigns the animation loop to a variable for access in the useEffect hook
         
               if (sceneTime == "Party!") {
                 animatePartyLights();
               } else {
                 renderer.render(scene, camera);
               }
+              
               gl.endFrameEXP();
             }; 
 
-            render(); // render the scene by getting animation frames
+            render(); 
+            // render the scene by getting animation frames
             
           },
           // called when loading is in progresses
@@ -234,16 +237,14 @@ const styles = StyleSheet.create({
         margin: 5,
         marginTop: 20,
         zIndex: -1
-      },
-      
+    },
     controls: {
-      display: "flex",
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
       width: "75%",
       flex: 1,
-      marginTop: -250,
+      marginBottom: -350,
       backgroundColor: "rgba(0,0,0,0.75)",
       borderRadius: 10
     },

@@ -1,17 +1,23 @@
 {
   "expo": {
-    "name": "Virtual-Decor-Application",
+    "name": "Virtual Decor",
     "slug": "Virtual-Decor-Application",
     "version": "1.0.0",
-    "splash" : {
+    "splash": {
       "image": "./assets/splash.png",
-      "resizeMode" : "contain",
+      "resizeMode": "contain",
       "backgroundColor": "#121212"
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
-  }, 
+    ],
+    "android": {
+      "package": "com.jthanni.VirtualDecorApplication"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jthanni.VirtualDecorApplication"
+    }
+  },
   "packagerOpts": {
     "assetExts": [
       "ttf",

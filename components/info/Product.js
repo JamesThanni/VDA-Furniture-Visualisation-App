@@ -19,17 +19,19 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         backgroundColor: '#1e1e1e',
-        borderRadius: 16,
+        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        marginTop: '4%',
+        marginBottom: '4%',
         width: "100%"
     },
     image: {
         flex: 1,
-        width: "20%",
-        height: "20%",
+        width: "50%",
+        height: "50%",
         resizeMode: 'contain',
+        borderRadius: 10,
+        aspectRatio: 3/2
     },
     infoContainer: {
         flex: 3,

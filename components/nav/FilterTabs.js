@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import globalStyles from '../../styles/GlobalStyles';
 import { getCategories } from '../../data/Categories';
 import Filter from './Filter';
 

@@ -3,11 +3,11 @@ import {View, Text, StyleSheet} from "react-native";
 import { CartContext } from "../CartContext";
 
 export function CartButton({navigation}){
-    const {getItemsCount} = useContext(CartContext);
+    const {getItemQuantity} = useContext(CartContext);
     return(
         <View style={styles.container}>
             <Text style={styles.text} onPress={() => {navigation.navigate('Cart')}}>
-                Cart ({getItemsCount()})
+                Cart ({getItemQuantity()})
             </Text>
         </View>
     )

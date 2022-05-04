@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TextField = ({label, icon, ...props}) => {
     return (
-        <View>
+        <>
             <TextInput 
             style={styles.textField} 
             placeholderTextColor="grey"  
@@ -13,7 +13,7 @@ const TextField = ({label, icon, ...props}) => {
             onBlur={props.onBlur} 
             value={props.value} 
             {...props}/>
-        </View>
+        </>
     )
 }
 

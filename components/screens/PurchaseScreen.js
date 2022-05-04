@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import globalStyles from '../../styles/GlobalStyles';
-import AppButton from '../../components/input/AppButton';
-import AppText from '../../components/info/AppText';
-import { CartContext } from '../../CartContext';
-import * as AppNavigation from '../../components/nav/Navigator.js';
+import AppButton from '../input/AppButton';
+import AppText from '../info/AppText';
+import { CartContext } from '../../scripts/context/CartContext';
+import * as AppNavigation from '../nav/Navigator.js';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MainContainer from '../containers/MainContainer';
 
 export default function PurchaseScreen ({object, setObject}) {
     const {items, setItems, sceneLoaded, setSceneLoaded} = React.useContext(CartContext);
@@ -24,14 +24,14 @@ export default function PurchaseScreen ({object, setObject}) {
     }
 
     return (
-        <View styles={[globalStyles.container]}>
+        <MainContainer>
             
             <View style={styles.message}>
                 <Ionicons styles={styles.center} name={"checkmark"} size={32} color={"white"}/>
                 <AppText type={"h1"} text={`Purchase Successful!`}/>
             </View>
             <AppButton text="Continue Shopping" onPress={() => purchaseItems(true)}/>
-        </View>
+        </MainContainer>
     )
 }
 

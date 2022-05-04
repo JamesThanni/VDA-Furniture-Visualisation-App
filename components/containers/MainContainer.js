@@ -1,18 +1,17 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 
-const Container = (props) => {
+export default MainContainer = (props) => {
     return <View style={styles.container} {...props}>{props.children}</View>;
 } // make take other props such as additional styles
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         flex: 1,
-        padding: "25px",
-        paddingTop: "40px",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 10,
+        paddingTop: 30,
         backgroundColor: "#121212"
     }
 })
-
-export default Container;
