@@ -8,9 +8,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#121212"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.jthanni.VirtualDecorApplication"
     },
@@ -19,13 +17,6 @@
     }
   },
   "packagerOpts": {
-    "assetExts": [
-      "ttf",
-      "mp4",
-      "otf",
-      "xml",
-      "obj",
-      "mtl"
-    ]
+    "assetExts": ["ttf", "mp4", "otf", "xml", "obj", "mtl"]
   }
 }

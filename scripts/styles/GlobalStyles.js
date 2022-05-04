@@ -1,18 +1,14 @@
-import {StyleSheet} from 'react-native';
-
+import { StyleSheet } from 'react-native'
+// a script that stores repetitive styles so they can be used by all components
 const globalStyles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: "row",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#121212",
-        padding: 10,
-    },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between"
-    }
-});
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  column: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+})
 
-export default globalStyles;
+export default globalStyles

@@ -1,5 +1,5 @@
 // Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require('expo/metro-config');
+const { getDefaultConfig } = require('expo/metro-config')
 
 module.exports = {
   transformer: {
@@ -11,7 +11,7 @@ module.exports = {
     }),
   },
   resolver: {
-      assetExts: ['db', 'mp3', 'ttf', 'obj', 'png', 'jpg', 'mtl', 'glb', 'gltf'],
-      sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs'], //add here
+    assetExts: ['db', 'mp3', 'ttf', 'obj', 'png', 'jpg', 'mtl', 'glb', 'gltf'],
+    sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs'], //add here
   }, // stays the same
 }
