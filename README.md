@@ -1,4 +1,4 @@
-# Virtual Decor Application - A Furniture E-Commerce/Shop App with 3D Graphics for visualising objects in your room!
+# Deko - Android Furniture Visualisation App - A Furniture E-Commerce/Shop App with 3D Graphics for visualising objects in your room!
 
 ## Description
 
