@@ -1,4 +1,4 @@
-# Deko - Android Furniture Visualisation App - A Furniture E-Commerce/Shop App with 3D Graphics for visualising objects in your room!
+# VDA - Android Furniture Visualisation App - A Furniture E-Commerce/Shop App with 3D Graphics for visualising objects in your room!
 
 ## Description
 Deko is a mobile e-commerce application with a computer-generated 3D scene to visualise furniture products.
